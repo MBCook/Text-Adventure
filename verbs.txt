@@ -5,3 +5,4 @@ open
 close
 use
 throw
+go/move/walk
