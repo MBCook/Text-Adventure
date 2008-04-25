@@ -1,0 +1,7 @@
+look
+take
+put
+open
+close
+use
+throw
