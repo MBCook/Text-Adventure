@@ -3,6 +3,8 @@ package com.text_adventure.world_objects;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.text_adventure.exception.InvalidActionException;
+
 /**
  * A part of the world, which can be a room or a thing
  * @author mcook
@@ -28,6 +30,10 @@ public abstract class WorldObject {
 	 * The description of this object
 	 */
 	private String description = null;
+	/**
+	 * Can we hold other objects
+	 */
+	private boolean container = false;
 
 	/**
 	 * Set us up with the things we know about
@@ -36,12 +42,21 @@ public abstract class WorldObject {
 	 * @param siblings Our siblings
 	 */
 	public WorldObject(WorldObject parent, List<WorldObject> children, List<WorldObject> siblings,
-							String name, String description) {
+							String name, String description, boolean container) {
 		this.parent = parent;
 		this.children = children;
 		this.siblings = siblings;
 		this.name = name;
 		this.description = description;
+		this.container = container;
+	}
+	
+	/**
+	 * Return whether or not we can contain things
+	 * @return Wheter or not we can contain things
+	 */
+	public boolean isContainer() {
+		return container;
 	}
 	
 	/**
@@ -87,8 +102,11 @@ public abstract class WorldObject {
 	/**
 	 * Add a child to the list of our children
 	 * @param child The child to add
+	 * @throws InvalidActionException if you try to do something you shouldn't
 	 */
-	public void addChild(WorldObject child) {
+	public void addChild(WorldObject child) throws InvalidActionException {
+		if (!container)
+			throw new InvalidActionException("A " + name + " can't hold things");
 		if (children == null)
 			children = new ArrayList<WorldObject>();
 		if (!children.contains(child))
@@ -109,8 +127,11 @@ public abstract class WorldObject {
 	/**
 	 * Remove a child object from the list of child objects
 	 * @param child The child to remove
+	 * @throws InvalidActionException if you try to do something you shouldn't
 	 */
-	public void removeChild(WorldObject child) {
+	public void removeChild(WorldObject child) throws Exception {
+		if (!container)
+			throw new InvalidActionException("A " + name + " can't hold things");
 		if (children == null)
 			return;
 		children.remove(child);

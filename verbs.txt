@@ -1,5 +1,5 @@
 look
-take
+take/pick up
 put
 open
 close
