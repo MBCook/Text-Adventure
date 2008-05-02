@@ -40,6 +40,9 @@ public abstract class WorldObject {
 	 * @param parent Our parent
 	 * @param children Our children
 	 * @param siblings Our siblings
+	 * @param name The name of this object
+	 * @param description The description of this object
+	 * @param container Lets us know if we are allowed to contain children
 	 */
 	public WorldObject(WorldObject parent, List<WorldObject> children, List<WorldObject> siblings,
 							String name, String description, boolean container) {
