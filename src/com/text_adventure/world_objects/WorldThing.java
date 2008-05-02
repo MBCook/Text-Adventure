@@ -2,6 +2,10 @@ package com.text_adventure.world_objects;
 
 import java.util.List;
 
+/**
+ * A thing in our world, that's not a room
+ * @author mcook
+ */
 public class WorldThing extends WorldObject {
 	/**
 	 * The type of object we are (furnature, key, whatever)
@@ -46,12 +50,20 @@ public class WorldThing extends WorldObject {
 	 * @param room The room the player is in
 	 * @param otherThing The thing this object is being used with
 	 */
-	public void handleInteraction(WorldThing player, WorldRoom room, WorldThing otherThing) {
+	public void handleInteraction(WorldPlayer player, WorldRoom room, WorldThing otherThing) {
 		System.out.println("The player tried to use " + getName() + " with " + otherThing.getName() +
 															" while in the room named " + room.getName());
 	}
 	
 	public boolean isRoom() {
 		return false;
+	}
+	
+	public boolean isPlayer() {
+		return false;
+	}
+	
+	public boolean supportsSiblings() {
+		return true;
 	}
 }

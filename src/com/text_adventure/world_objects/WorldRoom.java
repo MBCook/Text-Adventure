@@ -2,8 +2,6 @@ package com.text_adventure.world_objects;
 
 import java.util.List;
 
-import com.text_adventure.exception.InvalidActionException;
-
 /**
  * Represents a room in the game world
  * @author mcook
@@ -106,8 +104,11 @@ public class WorldRoom extends WorldObject {
 		return true;
 	}
 	
-	public void addSibling(WorldObject sibling) throws InvalidActionException {
-		// The user should never see this, it's for development only
-		throw new InvalidActionException("Rooms can't be given siblings.");
+	public boolean isPlayer() {
+		return false;
+	}
+	
+	public boolean supportsSiblings() {
+		return false;
 	}
 }

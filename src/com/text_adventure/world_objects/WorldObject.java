@@ -9,7 +9,7 @@ import com.text_adventure.exception.InvalidActionException;
  * A part of the world, which can be a room or a thing
  * @author mcook
  */
-public abstract class WorldObject {
+public abstract class WorldObject implements Comparable<WorldObject> {
 	/**
 	 * The thing that owns us (null if nothing)
 	 */
@@ -23,7 +23,7 @@ public abstract class WorldObject {
 	 */
 	private List<WorldObject> siblings = null;
 	/**
-	 * The name of this object
+	 * The name of this object, which must be unique in the universe
 	 */
 	private String name = null;
 	/**
@@ -121,6 +121,8 @@ public abstract class WorldObject {
 	 * @param sibling The sibling to add
 	 */
 	public void addSibling(WorldObject sibling) throws InvalidActionException {
+		if (!supportsSiblings())
+			throw new InvalidActionException("Player's can't be given siblings.");
 		if (siblings == null)
 			siblings = new ArrayList<WorldObject>();
 		if (!siblings.contains(sibling))
@@ -163,4 +165,34 @@ public abstract class WorldObject {
 	 * @return If we are a room or not
 	 */
 	public abstract boolean isRoom();
+	
+	/**
+	 * Answer if this object is the player or not
+	 * @return If we are the player or not
+	 */
+	public abstract boolean isPlayer();
+	
+	/**
+	 * Whether we support sibling elements or now
+	 * @return If we support having siblings
+	 */
+	public abstract boolean supportsSiblings();
+	
+	/**
+	 * Compare this object to another (for sorting purposes)
+	 * @param other The object to compare to
+	 * @return The result of the comparison
+	 */
+	public int compareTo(WorldObject other) {
+		return getName().compareTo(other.getName());
+	}
+	
+	/**
+	 * Checks if this object is equal to another boject
+	 * @param other The other object
+	 * @return If we are equal
+	 */
+	public boolean equals(WorldObject other) {
+		return getName().equals(other.getName());
+	}
 }
