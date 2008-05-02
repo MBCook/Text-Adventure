@@ -6,10 +6,10 @@ import java.util.List;
 import com.text_adventure.exception.InvalidActionException;
 
 /**
- * A part of the world, which is usually just a thing but could be a room
+ * A part of the world, which can be a room or a thing
  * @author mcook
  */
-public class WorldObject {
+public abstract class WorldObject {
 	/**
 	 * The thing that owns us (null if nothing)
 	 */
@@ -162,7 +162,5 @@ public class WorldObject {
 	 * Answer if this object is a room or not
 	 * @return If we are a room or not
 	 */
-	public boolean isRoom() {
-		return false;
-	}
+	public abstract boolean isRoom();
 }
