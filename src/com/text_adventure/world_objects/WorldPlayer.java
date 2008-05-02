@@ -20,15 +20,14 @@ public class WorldPlayer extends WorldObject implements Comparable<WorldObject> 
 	 * Set us up with the things we know about
 	 * @param parent Our parent
 	 * @param children Our children
-	 * @param siblings Our siblings
 	 * @param name The name of this object
 	 * @param description The description of this object
 	 * @param container Lets us know if we are allowed to contain children
 	 * @param type The type of object this is (furnature, key, whatever)
 	 */
-	public WorldPlayer(WorldObject parent, List<WorldObject> children, List<WorldObject> siblings,
-													String name, String description, boolean container) {
-		super(parent, children, null, name, description, container);
+	public WorldPlayer(WorldObject parent, List<WorldObject> children,
+									String name, String description, boolean container) {
+		super(parent, children, name, description, container);
 	}
 	
 	/**
@@ -87,14 +86,17 @@ public class WorldPlayer extends WorldObject implements Comparable<WorldObject> 
 	}
 	
 	public boolean isRoom() {
+		// We are not a room.
 		return false;
 	}
 	
 	public boolean isPlayer() {
-		return false;
+		// We are the player. We rule.
+		return true;
 	}
-	
-	public boolean supportsSiblings() {
+
+	public boolean isMoveable() {
+		// We can't be picked up, so this is just incase.
 		return false;
 	}
 }

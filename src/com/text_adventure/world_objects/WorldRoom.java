@@ -36,7 +36,7 @@ public class WorldRoom extends WorldObject {
 	 */
 	public WorldRoom(WorldObject parent, List<WorldObject> children,
 												String name, String description) {
-		super(parent, children, null, name, description, true);
+		super(parent, children, name, description, true);
 	}
 	
 	/**
@@ -122,14 +122,17 @@ public class WorldRoom extends WorldObject {
 	}
 	
 	public boolean isRoom() {
+		// We are a room
 		return true;
 	}
 	
 	public boolean isPlayer() {
+		// We are not a player
 		return false;
 	}
 	
-	public boolean supportsSiblings() {
+	public boolean isMoveable() {
+		// We can't be picked up and moved
 		return false;
 	}
 }

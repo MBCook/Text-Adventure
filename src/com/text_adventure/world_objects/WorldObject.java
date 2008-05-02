@@ -19,10 +19,6 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 	 */
 	private List<WorldObject> children = null;
 	/**
-	 * The things that are level with us (other objects in a bag, null if nothing)
-	 */
-	private List<WorldObject> siblings = null;
-	/**
 	 * The name of this object, which must be unique in the universe
 	 */
 	private String name = null;
@@ -41,16 +37,14 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 	 * Set us up with the things we know about
 	 * @param parent Our parent
 	 * @param children Our children
-	 * @param siblings Our siblings
 	 * @param name The name of this object
 	 * @param description The description of this object
 	 * @param container Lets us know if we are allowed to contain children
 	 */
-	public WorldObject(WorldObject parent, List<WorldObject> children, List<WorldObject> siblings,
+	public WorldObject(WorldObject parent, List<WorldObject> children,
 							String name, String description, boolean container) {
 		this.parent = parent;
 		this.children = children;
-		this.siblings = siblings;
 		this.name = name;
 		this.description = description;
 		this.container = container;
@@ -125,19 +119,6 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 	}
 	
 	/**
-	 * Add a sibling to the list of our siblings
-	 * @param sibling The sibling to add
-	 */
-	public void addSibling(WorldObject sibling) throws InvalidActionException {
-		if (!supportsSiblings())
-			throw new InvalidActionException("Player's can't be given siblings.");
-		if (siblings == null)
-			siblings = new ArrayList<WorldObject>();
-		if (!siblings.contains(sibling))
-			siblings.add(sibling);
-	}
-	
-	/**
 	 * Remove a child object from the list of child objects
 	 * @param child The child to remove
 	 * @throws InvalidActionException if you try to do something you shouldn't
@@ -149,43 +130,7 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 			return;
 		children.remove(child);
 	}
-	
-	/**
-	 * Remove a sibling object from the list of sibling objects
-	 * @param sibling The sibling to remove
-	 */
-	public void removeSibling(WorldObject sibling) {
-		if (siblings == null)
-			return;
-		siblings.remove(sibling);
-	}
-	
-	/**
-	 * Get a list of our sibling objects
-	 * @return A list of the objects
-	 */
-	public List<WorldObject> getSiblings() {
-		return siblings;
-	}
-	
-	/**
-	 * Answer if this object is a room or not
-	 * @return If we are a room or not
-	 */
-	public abstract boolean isRoom();
-	
-	/**
-	 * Answer if this object is the player or not
-	 * @return If we are the player or not
-	 */
-	public abstract boolean isPlayer();
-	
-	/**
-	 * Whether we support sibling elements or now
-	 * @return If we support having siblings
-	 */
-	public abstract boolean supportsSiblings();
-	
+
 	/**
 	 * Compare this object to another (for sorting purposes)
 	 * @param other The object to compare to
@@ -210,4 +155,22 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 	public String getState() {
 		return null;
 	}
+	
+	/**
+	 * Answer if this object is a room or not
+	 * @return If we are a room or not
+	 */
+	public abstract boolean isRoom();
+	
+	/**
+	 * Answer if this object is the player or not
+	 * @return If we are the player or not
+	 */
+	public abstract boolean isPlayer();
+	
+	/**
+	 * Whether or not this item can be moved (i.e. picked up)
+	 * @return If we are moveable
+	 */
+	public abstract boolean isMoveable();
 }

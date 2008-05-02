@@ -15,22 +15,26 @@ public class WorldThing extends WorldObject {
 	 * The state of this object
 	 */
 	public String state = null;
+	/**
+	 * If we can be moved (like a key) or not (like a big table)
+	 */
+	public boolean moveable = true;
 	
 	/**
 	 * Set us up with the things we know about
 	 * @param parent Our parent
 	 * @param children Our children
-	 * @param siblings Our siblings
 	 * @param name The name of this object
 	 * @param description The description of this object
 	 * @param container Lets us know if we are allowed to contain children
 	 * @param type The type of object this is (furnature, key, whatever)
 	 */
-	public WorldThing(WorldObject parent, List<WorldObject> children, List<WorldObject> siblings,
-							String name, String description, boolean container, String type, String state) {
-		super(parent, children, siblings, name, description, container);
+	public WorldThing(WorldObject parent, List<WorldObject> children, String name,
+						String description, boolean container, String type, String state, boolean moveable) {
+		super(parent, children, name, description, container);
 		this.type = type;
 		this.state = state;
+		this.moveable = moveable;
 	}
 	
 	/**
@@ -62,14 +66,16 @@ public class WorldThing extends WorldObject {
 	}
 	
 	public boolean isRoom() {
+		// We are not a room
 		return false;
 	}
 	
 	public boolean isPlayer() {
+		// We are not the player
 		return false;
 	}
 	
-	public boolean supportsSiblings() {
-		return true;
+	public boolean isMoveable() {
+		return moveable;
 	}
 }
