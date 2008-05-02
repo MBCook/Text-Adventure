@@ -44,17 +44,6 @@ public class WorldThing extends WorldObject {
 		return type;
 	}
 	
-	/**
-	 * Handle the player trying to use us with something else
-	 * @param player The player
-	 * @param room The room the player is in
-	 * @param otherThing The thing this object is being used with
-	 */
-	public void handleInteraction(WorldPlayer player, WorldRoom room, WorldThing otherThing) {
-		System.out.println("The player tried to use " + getName() + " with " + otherThing.getName() +
-															" while in the room named " + room.getName());
-	}
-	
 	public boolean isRoom() {
 		return false;
 	}
