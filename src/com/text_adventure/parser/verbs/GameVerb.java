@@ -14,4 +14,9 @@ public interface GameVerb {
 	public void executeVerb(GameWorld world, String... params) throws InvalidActionException,
 																		InvalidGrammarException,
 																		UnknownObjectException;
+	
+	/**
+	 * Print out help on how to use this command
+	 */
+	public void printHelp();
 }
