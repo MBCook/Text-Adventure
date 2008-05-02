@@ -11,6 +11,10 @@ public class WorldThing extends WorldObject {
 	 * The type of object we are (furnature, key, whatever)
 	 */
 	public String type = null;
+	/**
+	 * The state of this object
+	 */
+	public String state = null;
 	
 	/**
 	 * Set us up with the things we know about
@@ -23,9 +27,10 @@ public class WorldThing extends WorldObject {
 	 * @param type The type of object this is (furnature, key, whatever)
 	 */
 	public WorldThing(WorldObject parent, List<WorldObject> children, List<WorldObject> siblings,
-									String name, String description, boolean container, String type) {
+							String name, String description, boolean container, String type, String state) {
 		super(parent, children, siblings, name, description, container);
 		this.type = type;
+		this.state = state;
 	}
 	
 	/**
@@ -42,6 +47,18 @@ public class WorldThing extends WorldObject {
 	 */
 	public String getType() {
 		return type;
+	}
+	
+	/**
+	 * Set the state of this object
+	 * @param state The state this object should be in
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public String getState() {
+		return state;
 	}
 	
 	public boolean isRoom() {

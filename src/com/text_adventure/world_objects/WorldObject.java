@@ -27,7 +27,9 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 	 */
 	private String name = null;
 	/**
-	 * The description of this object
+	 * The description of this object. This can contain some special characters.
+	 * %s refers to the state of this object, %n refers to it's name,
+	 * and %c is the number of things it contains.
 	 */
 	private String description = null;
 	/**
@@ -75,6 +77,12 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 	 * @return Our description
 	 */
 	public String getDescription() {
+		String desc = description;
+		
+		desc = desc.replace("%s", getState());
+		desc = desc.replace("%c", "" + (children == null ? 0 : children.size()));
+		desc = desc.replace("%n", getName());
+		
 		return description;
 	}
 	
@@ -194,5 +202,12 @@ public abstract class WorldObject implements Comparable<WorldObject> {
 	 */
 	public boolean equals(WorldObject other) {
 		return getName().equals(other.getName());
+	}
+	
+	/**
+	 * Get the current state of this object
+	 */
+	public String getState() {
+		return null;
 	}
 }

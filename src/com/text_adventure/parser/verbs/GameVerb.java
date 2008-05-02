@@ -5,6 +5,10 @@ import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
 import com.text_adventure.world_objects.GameWorld;
 
+/**
+ * A verb the user can use in the game's parser
+ * @author mcook
+ */
 public interface GameVerb {
 	/**
 	 * Handles the execution of this verb

@@ -65,6 +65,14 @@ public class GameWorld {
 	}
 	
 	/**
+	 * Remove an object to the map of all objects in the universe
+	 * @param object The object to forget about
+	 */
+	public void removeObjectFromMap(WorldObject object) {
+		nameToObjectMap.remove(object.getName());
+	}
+	
+	/**
 	 * Get an object based on it's name
 	 * @param name The name of the object to look for
 	 * @return The object with that name

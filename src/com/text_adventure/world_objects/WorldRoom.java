@@ -2,6 +2,9 @@ package com.text_adventure.world_objects;
 
 import java.util.List;
 
+import com.text_adventure.exception.InvalidActionException;
+import com.text_adventure.exception.PlayerDeathException;
+
 /**
  * Represents a room in the game world
  * @author mcook
@@ -100,6 +103,24 @@ public class WorldRoom extends WorldObject {
 		this.westRoom = westRoom;
 	}
 
+	/**
+	 * A funciton called when the player tries to enter this room
+	 * @throws InvalidActionException When they try to do something they shouldn't (i.e. door is locked)
+	 * @throws PlayerDeathException When they do something stupid (i.e. killed by guillotine over door)
+	 */
+	public void attemptToEnter() throws InvalidActionException, PlayerDeathException {
+		// Nothing
+	}
+	
+	/**
+	 * A funciton called when the player tries to exit this room
+	 * @throws InvalidActionException When they try to do something they shouldn't (i.e. chained to floor)
+	 * @throws PlayerDeathException When they do something stupid (i.e. trigger land-mine)
+	 */
+	public void attemptToExit() throws InvalidActionException, PlayerDeathException {
+		// Nothing
+	}
+	
 	public boolean isRoom() {
 		return true;
 	}
