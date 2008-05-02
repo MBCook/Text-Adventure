@@ -6,10 +6,10 @@ import java.util.List;
 import com.text_adventure.exception.InvalidActionException;
 
 /**
- * A part of the world, which can be a room or a thing
+ * A part of the world, which is usually just a thing but could be a room
  * @author mcook
  */
-public abstract class WorldObject {
+public class WorldObject {
 	/**
 	 * The thing that owns us (null if nothing)
 	 */
@@ -120,7 +120,7 @@ public abstract class WorldObject {
 	 * Add a sibling to the list of our siblings
 	 * @param sibling The sibling to add
 	 */
-	public void addSibling(WorldObject sibling) {
+	public void addSibling(WorldObject sibling) throws InvalidActionException {
 		if (siblings == null)
 			siblings = new ArrayList<WorldObject>();
 		if (!siblings.contains(sibling))
@@ -162,5 +162,7 @@ public abstract class WorldObject {
 	 * Answer if this object is a room or not
 	 * @return If we are a room or not
 	 */
-	public abstract boolean isRoom();
+	public boolean isRoom() {
+		return false;
+	}
 }
