@@ -1,4 +1,4 @@
-package com.text_adventure.parser.verbs;
+package com.text_adventure.parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,5 +53,14 @@ public class ParserHelper {
 	 */
 	public static String readLine(boolean allowBlank) throws IOException {
 		return readLine(null, allowBlank);
+	}
+	
+	/**
+	 * Split the given string into words
+	 * @param input The string to split
+	 * @return An array of words, each a String
+	 */
+	public static String[] splitStringIntoWords(String input) {
+		return input.replaceAll("\\s{2,}", " ").split(" ");	// Split on whitespace
 	}
 }

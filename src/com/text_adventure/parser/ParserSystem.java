@@ -1,7 +1,9 @@
-package com.text_adventure.parser.verbs;
+package com.text_adventure.parser;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.text_adventure.parser.verbs.GameVerb;
 
 /**
  * The class responsible for getting and parsing out all player input
