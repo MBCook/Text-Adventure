@@ -20,7 +20,14 @@ public interface GameVerb {
 																		UnknownObjectException;
 	
 	/**
-	 * Print out help on how to use this command
+	 * Return the help string for this verb
+	 * @return The help string
 	 */
-	public void printHelp();
+	public String getHelp();
+	
+	/**
+	 * Get the word that this verb represents
+	 * @return The word
+	 */
+	public String getVerb();
 }
