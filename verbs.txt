@@ -1,8 +1,10 @@
 look
-take/pick up
+take/pick-up
 put
 open
 close
 use
 throw
 go/move/walk
+
+Verbs must be one word, no spaces. Hyphens are OK. Also, lowercase.
