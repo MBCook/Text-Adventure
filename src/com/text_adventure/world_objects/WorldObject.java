@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.text_adventure.exception.InvalidActionException;
+import com.text_adventure.parser.ParserToken;
 
 /**
  * A part of the world, which can be a room or a thing
  * @author mcook
  */
-public abstract class WorldObject implements Comparable<WorldObject> {
+public abstract class WorldObject extends ParserToken implements Comparable<WorldObject> {
 	/**
 	 * The thing that owns us (null if nothing)
 	 */

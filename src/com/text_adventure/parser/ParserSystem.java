@@ -3,6 +3,9 @@ package com.text_adventure.parser;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.text_adventure.parser.special_words.GameDirectionWord;
+import com.text_adventure.parser.special_words.GamePrepositionWord;
+import com.text_adventure.parser.special_words.GameSpecialWord;
 import com.text_adventure.parser.verbs.CloseVerb;
 import com.text_adventure.parser.verbs.GameVerb;
 import com.text_adventure.parser.verbs.GameVerbAlias;
@@ -13,6 +16,7 @@ import com.text_adventure.parser.verbs.TakeVerb;
 import com.text_adventure.parser.verbs.ThrowVerb;
 import com.text_adventure.parser.verbs.UseVerb;
 import com.text_adventure.parser.verbs.WalkVerb;
+import com.text_adventure.world_objects.WorldDirection;
 
 /**
  * The class responsible for getting and parsing out all player input
@@ -23,6 +27,11 @@ public class ParserSystem {
 	 * A map to let us find verbs easily
 	 */
 	private Map<String, GameVerb> wordToVerbMap = new HashMap<String, GameVerb>();
+	
+	/**
+	 * A map to let us find special words easily
+	 */
+	private Map<String, GameSpecialWord> wordToSpecialWordMap = new HashMap<String, GameSpecialWord>();
 	
 	/**
 	 * Initializes our verb list with all the code knows about
@@ -42,8 +51,20 @@ public class ParserSystem {
 		// Now some aliases
 		
 		addVerb(new GameVerbAlias(getVerbFromWord("take"), "pick-up"));
+		addVerb(new GameVerbAlias(getVerbFromWord("put"), "put-down"));
+		addVerb(new GameVerbAlias(getVerbFromWord("put"), "set-down"));
 		addVerb(new GameVerbAlias(getVerbFromWord("walk"), "move"));
 		addVerb(new GameVerbAlias(getVerbFromWord("walk"), "go"));
+		
+		// Now some special words we'll want
+		
+		addSpecialWord(new GamePrepositionWord("in", WorldPreposition.IN));
+		addSpecialWord(new GamePrepositionWord("at", WorldPreposition.AT));
+		addSpecialWord(new GamePrepositionWord("on", WorldPreposition.ON));
+		addSpecialWord(new GameDirectionWord("north", WorldDirection.NORTH));
+		addSpecialWord(new GameDirectionWord("east", WorldDirection.EAST));
+		addSpecialWord(new GameDirectionWord("south", WorldDirection.SOUTH));
+		addSpecialWord(new GameDirectionWord("west", WorldDirection.WEST));
 	}
 	
 	/**
@@ -57,9 +78,26 @@ public class ParserSystem {
 	/**
 	 * Get the verb for a given word
 	 * @param word The word to look for
-	 * @return The GameVerb
+	 * @return The verb
 	 */
 	public GameVerb getVerbFromWord(String word) {
 		return wordToVerbMap.get(word);
+	}
+	
+	/**
+	 * Add the given special word to our map of special words
+	 * @param verb The special word to add
+	 */
+	public void addSpecialWord(GameSpecialWord specialWord) {
+		wordToSpecialWordMap.put(specialWord.getSpecialWord(), specialWord);
+	}
+	
+	/**
+	 * Get the special word for a given word
+	 * @param word The word to look for
+	 * @return The special word
+	 */
+	public GameSpecialWord getSpecialWordFromWord(String word) {
+		return wordToSpecialWordMap.get(word);
 	}
 }

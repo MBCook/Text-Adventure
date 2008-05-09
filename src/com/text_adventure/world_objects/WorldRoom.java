@@ -1,6 +1,8 @@
 package com.text_adventure.world_objects;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.PlayerDeathException;
@@ -11,21 +13,9 @@ import com.text_adventure.exception.PlayerDeathException;
  */
 public class WorldRoom extends WorldObject {
 	/**
-	 * The room that is to the north of this one
+	 * The rooms that we are attached to
 	 */
-	private WorldRoom northRoom = null;
-	/**
-	 * The room that is to the east of this one
-	 */
-	private WorldRoom eastRoom = null;
-	/**
-	 * The room that is to the south of this one
-	 */
-	private WorldRoom southRoom = null;
-	/**
-	 * The room that is to the west of this one
-	 */
-	private WorldRoom westRoom = null;
+	private Map<WorldDirection, WorldRoom> roomExits = new HashMap<WorldDirection, WorldRoom>();
 	
 	/**
 	 * Set us up with the things we know about
@@ -40,67 +30,21 @@ public class WorldRoom extends WorldObject {
 	}
 	
 	/**
-	 * Gets the room to our east
+	 * Gets the room off to the given direction
+	 * @param direction The direction we are looking at
 	 * @return The {@link WorldRoom}
 	 */
-	public WorldRoom getEastRoom() {
-		return eastRoom;
+	public WorldRoom getRoomInDirection(WorldDirection direction) {
+		return roomExits.get(direction);
 	}
-
-	/**
-	 * Store the room that should be to our east
-	 * @param eastRoom The {@link WorldRoom}
-	 */
-	public void setEastRoom(WorldRoom eastRoom) {
-		this.eastRoom = eastRoom;
-	}
-
-	/**
-	 * Gets the room to our north
-	 * @return The {@link WorldRoom}
-	 */
-	public WorldRoom getNorthRoom() {
-		return northRoom;
-	}
-
-	/**
-	 * Store the room that should be to our north
-	 * @param northRoom The {@link WorldRoom}
-	 */
-	public void setNorthRoom(WorldRoom northRoom) {
-		this.northRoom = northRoom;
-	}
-
-	/**
-	 * Gets the room to our south
-	 * @return The {@link WorldRoom}
-	 */
-	public WorldRoom getSouthRoom() {
-		return southRoom;
-	}
-
-	/**
-	 * Store the room that should be to our south
-	 * @param southRoom The {@link WorldRoom}
-	 */
-	public void setSouthRoom(WorldRoom southRoom) {
-		this.southRoom = southRoom;
-	}
-
-	/**
-	 * Gets the room to our west
-	 * @return The {@link WorldRoom}
-	 */
-	public WorldRoom getWestRoom() {
-		return westRoom;
-	}
-
+	
 	/**
 	 * Store the room that should be to our west
-	 * @param westRoom The {@link WorldRoom}
+	 * @param room The {@link WorldRoom}
+	 * @param direction The direction this other room is in
 	 */
-	public void setWestRoom(WorldRoom westRoom) {
-		this.westRoom = westRoom;
+	public void setRoomInDirection(WorldRoom room, WorldDirection direction) {
+		roomExits.put(direction, room);
 	}
 
 	/**

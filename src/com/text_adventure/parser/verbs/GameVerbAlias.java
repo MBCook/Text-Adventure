@@ -3,13 +3,14 @@ package com.text_adventure.parser.verbs;
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
+import com.text_adventure.parser.ParserToken;
 import com.text_adventure.world_objects.GameWorld;
 
 /**
  * A class to point to a verb so that go and walk can mean the same thing
  * @author mcook
  */
-public class GameVerbAlias implements GameVerb {
+public class GameVerbAlias extends GameVerb {
 	/**
 	 * The verb this alias points to
 	 */
@@ -29,10 +30,10 @@ public class GameVerbAlias implements GameVerb {
 		this.alias = alias;
 	}
 	
-	public void executeVerb(GameWorld world, String... params)
+	public void executeVerb(GameWorld world, ParserToken... sentence)
 			throws InvalidActionException, InvalidGrammarException,
 			UnknownObjectException {
-		targetVerb.executeVerb(world, params);
+		targetVerb.executeVerb(world, sentence);
 	}
 
 	public String getVerb() {
