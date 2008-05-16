@@ -114,8 +114,7 @@ public class ParserSystem {
 	 * @return A list of tokens
 	 */
 	public List<ParserToken> parseSentence(GameWorld world, String sentence)
-													throws InvalidGrammarException,
-																UnknownObjectException {
+																	throws UnknownObjectException {
 		List<ParserToken> result = new ArrayList<ParserToken>();
 		
 		// First, sanity check the sentence
@@ -194,7 +193,7 @@ public class ParserSystem {
 				
 				// We have no idea what this word is. Throw an exception
 				
-				throw new InvalidGrammarException("Your word '" + word + "' is unknown to this world");
+				throw new UnknownObjectException("Your word '" + word + "' is unknown to this world");
 			}
 		}
 		
