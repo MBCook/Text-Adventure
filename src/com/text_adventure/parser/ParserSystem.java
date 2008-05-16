@@ -22,6 +22,7 @@ import com.text_adventure.parser.verbs.UseVerb;
 import com.text_adventure.parser.verbs.WalkVerb;
 import com.text_adventure.world_objects.GameWorld;
 import com.text_adventure.world_objects.WorldDirection;
+import com.text_adventure.world_objects.WorldObject;
 
 /**
  * The class responsible for getting and parsing out all player input
@@ -113,13 +114,14 @@ public class ParserSystem {
 	 * @return A list of tokens
 	 */
 	public List<ParserToken> parseSentence(GameWorld world, String sentence)
-													throws InvalidGrammarException {
+													throws InvalidGrammarException,
+																UnknownObjectException {
 		List<ParserToken> result = new ArrayList<ParserToken>();
 		
 		// First, sanity check the sentence
 		
 		if ((sentence == null) || (sentence.trim().length() == 0)) {
-			throw new InvalidGrammarException("Given an empty sentence");
+			throw new IllegalArgumentException("Sentence was null or empty");
 		}
 		
 		// OK, split it into words
@@ -163,16 +165,36 @@ public class ParserSystem {
 				token = world.getObjectByName(word);
 				
 				if (token != null) {
-					// It was an object in the game, save it and move on
+					// It was an object in the game. Does the player have access to it?
+					// First check the stuff the player has
 					
-					result.add(token);
+					WorldObject thing = world.getPlayer().containsObjectWithName(word);
 					
-					continue;
+					if (thing != null) {
+						result.add(thing);
+						
+						continue;
+					}
+					
+					// Now check the stuff in the current room
+					
+					thing = world.getRoom().containsObjectWithName(word);
+					
+					if (thing != null) {
+						result.add(thing);
+						
+						continue;
+					}
+					
+					// If we're here, the object exists but the player doesn't have access to it
+					
+					throw new UnknownObjectException("You don't have access to anything called '" + word + "'");
+					
 				}
 				
 				// We have no idea what this word is. Throw an exception
 				
-				throw new InvalidGrammarException("Unknown word " + word);
+				throw new InvalidGrammarException("Your word '" + word + "' is unknown to this world");
 			}
 		}
 		

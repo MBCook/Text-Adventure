@@ -106,6 +106,31 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	}
 	
 	/**
+	 * Get an object with the given name that is somewhere under us in the hierarchy
+	 * @param name The name of the object we're looking for
+	 * @return The object if found, or null if not
+	 */
+	public WorldObject containsObjectWithName(String name) {
+		// Look at each of our children
+		
+		for (WorldObject child : children) {
+			// It is this child?
+			if (child.getName().equals(name)) {
+				return child;
+			} else if (child.isContainer()) {
+				// Is it IN this child?
+				WorldObject thing = child.containsObjectWithName(name);
+				
+				if (thing != null) {
+					return thing;
+				}
+			}
+		}
+		
+		return null;	// Didn't find it
+	}
+	
+	/**
 	 * Add a child to the list of our children
 	 * @param child The child to add
 	 * @throws InvalidActionException if you try to do something you shouldn't
