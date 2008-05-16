@@ -112,6 +112,8 @@ public class ParserSystem {
 	 * @param world The game world we're operating in
 	 * @param sentence The sentence to parse
 	 * @return A list of tokens
+	 * @throws UnknownObjectException If there is a reference to a word we don't know
+	 * 									or to an object the user isn't near
 	 */
 	public List<ParserToken> parseSentence(GameWorld world, String sentence)
 																	throws UnknownObjectException {
@@ -200,5 +202,32 @@ public class ParserSystem {
 		// That's all. If we got here we have the sentence
 		
 		return result;
+	}
+	
+	/**
+	 * Check that the sentence meets our basic syntax rules
+	 * @param tokens The tokens that make up the sentence
+	 * @throws InvalidGrammarException If things aren't kosher
+	 */
+	public void checkGrammar(List<ParserToken> tokens) throws InvalidGrammarException {
+		// Check that things start with a verb
+		
+		if (!(tokens.get(0) instanceof GameVerb)) {
+			throw new InvalidGrammarException("Sentances should be commands. Channel your inner Klingon");
+		}
+		
+		// Check that the verb at the start of the sentence is the only verb
+		
+		for (int i = 1; i < tokens.size(); i++) {
+			if (tokens.get(i) instanceof GameVerb) {
+				throw new InvalidGrammarException("No non-predicate verb phrases, Mr. English Major");
+			}
+		}
+		
+		// Make sure sentences don't end on prepositions
+
+		if ((tokens.get(tokens.size() - 1) instanceof GamePrepositionWord)) {
+			throw new InvalidGrammarException("A preposition is a terrible thing to end a sentence on");
+		}
 	}
 }
