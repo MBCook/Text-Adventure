@@ -19,20 +19,9 @@ public abstract class GameVerb extends ParserToken {
 	 * @param world The game world we are executing in
 	 * @param sentence The sentence (tokenized) that was parsed
 	 */
-	public abstract void executeVerb(GameWorld world, ParserToken... sentence)
+	public abstract void executeVerb(GameWorld world, List<ParserToken> sentence)
 											throws InvalidActionException, InvalidGrammarException,
 														UnknownObjectException, GamestateChangeException;
-
-	/**
-	 * Conveniece method for us
-	 * @param world The game world we are executing in
-	 * @param sentence The sentence (tokenized) that was parsed
-	 */
-	public void executeVerb(GameWorld world, List<ParserToken> sentence)
-											throws InvalidActionException, InvalidGrammarException,
-														UnknownObjectException, GamestateChangeException {
-		executeVerb(world, (ParserToken[]) sentence.toArray());
-	}
 	
 	/**
 	 * Return the help string for this verb

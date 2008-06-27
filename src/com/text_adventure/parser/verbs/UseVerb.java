@@ -1,5 +1,7 @@
 package com.text_adventure.parser.verbs;
 
+import java.util.List;
+
 import com.text_adventure.exception.GamestateChangeException;
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
@@ -12,7 +14,7 @@ import com.text_adventure.world_objects.GameWorld;
  * @author mcook
  */
 public class UseVerb extends GameVerb {
-	public void executeVerb(GameWorld world, ParserToken... sentence)
+	public void executeVerb(GameWorld world, List<ParserToken> sentence)
 							throws InvalidActionException, InvalidGrammarException,
 									UnknownObjectException, GamestateChangeException {
 		System.out.println("Users are losers. You don't want to be one.");

@@ -1,5 +1,7 @@
 package com.text_adventure.parser.verbs;
 
+import java.util.List;
+
 import com.text_adventure.exception.GamestateChangeException;
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
@@ -31,9 +33,9 @@ public class GameVerbAlias extends GameVerb {
 		this.alias = alias;
 	}
 	
-	public void executeVerb(GameWorld world, ParserToken... sentence)
-			throws InvalidActionException, InvalidGrammarException,
-			UnknownObjectException, GamestateChangeException {
+	public void executeVerb(GameWorld world, List<ParserToken> sentence)
+											throws InvalidActionException, InvalidGrammarException,
+														UnknownObjectException, GamestateChangeException {
 		targetVerb.executeVerb(world, sentence);
 	}
 

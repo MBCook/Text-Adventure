@@ -1,11 +1,12 @@
 package com.textadventure;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.List;
 
+import com.text_adventure.exception.GamestateChangeException;
+import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
+import com.text_adventure.parser.ParserHelper;
 import com.text_adventure.parser.ParserSystem;
 import com.text_adventure.parser.ParserToken;
 import com.text_adventure.parser.verbs.GameVerb;
@@ -66,8 +67,6 @@ public class TextAdventure {
 	private static void mainLoop(GameWorld world) throws Exception {
 		ParserSystem parser = new ParserSystem();
 		
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		
 		// Theory:
 		//
 		// 1. Print out where the player is
@@ -83,11 +82,7 @@ public class TextAdventure {
 		while (true) {
 			// Print a simple prompt
 			
-			System.out.print("? ");
-			
-			// Get a line of input
-			
-			String sentence = in.readLine();
+			String sentence = ParserHelper.readLine("? ", false);
 			
 			// Parse into bits
 			
@@ -118,9 +113,16 @@ public class TextAdventure {
 			try {
 				verb.executeVerb(world, tokens);
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				
-				break;
+				if ((e instanceof InvalidActionException) || (e instanceof InvalidGrammarException)
+						|| (e instanceof UnknownObjectException) || (e instanceof GamestateChangeException)) {
+					System.out.println(e.getMessage());
+					
+					break;	
+				} else {
+					// Some kind of real exception we weren't expecting
+					
+					throw e;
+				}
 			}
 		}
 		
