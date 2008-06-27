@@ -43,6 +43,10 @@ public class GameVerbAlias extends GameVerb {
 		return alias;
 	}
 
+	public GameVerb getTargetVerb() {
+		return targetVerb;
+	}
+	
 	public String getHelp() {
 		// Aliases don't have help
 		

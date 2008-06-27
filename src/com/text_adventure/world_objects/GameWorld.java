@@ -3,6 +3,8 @@ package com.text_adventure.world_objects;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.text_adventure.parser.ParserSystem;
+
 /**
  * A class to keep track of a few important things
  * for us that we'll be passing around to functions
@@ -21,15 +23,21 @@ public class GameWorld {
 	 * A map to hold all the objects in the known universe
 	 */
 	private Map<String, WorldObject> nameToObjectMap = new HashMap<String, WorldObject>();
+	/**
+	 * A link to the parser system incase anyone needs it
+	 */
+	private ParserSystem parser = null;
 	
 	/**
 	 * Initialize the game world with the player in the given room
 	 * @param player The player to use
 	 * @param room The room they are in
+	 * @param parser The parser system we're using
 	 */
-	public GameWorld(WorldPlayer player, WorldRoom room) {
+	public GameWorld(WorldPlayer player, WorldRoom room, ParserSystem parser) {
 		this.player = player;
 		this.room = room;
+		this.parser = parser;
 	}
 	
 	/**
@@ -38,6 +46,22 @@ public class GameWorld {
 	 */
 	public void setRoom(WorldRoom room) {
 		this.room = room;
+	}
+	
+	/**
+	 * Get the parser we're using
+	 * @return The parser
+	 */
+	public ParserSystem getParser() {
+		return parser;
+	}
+	
+	/**
+	 * Set the parser we're using
+	 * @param parser The parser we're using
+	 */
+	public void setParser(ParserSystem parser) {
+		this.parser = parser;
 	}
 	
 	/**

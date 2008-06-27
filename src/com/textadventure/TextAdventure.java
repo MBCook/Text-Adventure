@@ -49,10 +49,14 @@ public class TextAdventure {
 		// Now create a player
 		
 		WorldPlayer player = new WorldPlayer(null, null, "Yourself", "Yourself", true);
+
+		// The parser system
+		
+		ParserSystem parser = new ParserSystem();
 		
 		// Now a game world to hold everything
 		
-		GameWorld world = new GameWorld(player, southWest);
+		GameWorld world = new GameWorld(player, southWest, parser);
 		
 		// Now start the main loop!
 		
@@ -65,8 +69,6 @@ public class TextAdventure {
 	 * @throws Exception
 	 */
 	private static void mainLoop(GameWorld world) throws Exception {
-		ParserSystem parser = new ParserSystem();
-		
 		// Theory:
 		//
 		// 1. Print out where the player is
@@ -89,7 +91,7 @@ public class TextAdventure {
 			List<ParserToken> tokens = null;
 			
 			try {
-				tokens = parser.parseSentence(world, sentence);
+				tokens = world.getParser().parseSentence(world, sentence);
 			} catch (UnknownObjectException e) {
 				System.out.println(e.getMessage());
 				
@@ -99,7 +101,7 @@ public class TextAdventure {
 			// See if that grammar makes any sense to us
 			
 			try {
-				parser.checkGrammar(tokens);
+				world.getParser().checkGrammar(tokens);
 			} catch (InvalidGrammarException e) {
 				System.out.println(e.getMessage());
 				
@@ -115,6 +117,7 @@ public class TextAdventure {
 			} catch (Exception e) {
 				if ((e instanceof InvalidActionException) || (e instanceof InvalidGrammarException)
 						|| (e instanceof UnknownObjectException) || (e instanceof GamestateChangeException)) {
+					System.out.print("\n");
 					System.out.println(e.getMessage());
 					
 					break;	
@@ -126,6 +129,6 @@ public class TextAdventure {
 			}
 		}
 		
-		System.out.println("\n\nExiting...");
+		System.out.println("\nExiting...");
 	}
 }

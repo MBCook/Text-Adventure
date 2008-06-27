@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
@@ -14,6 +15,7 @@ import com.text_adventure.parser.verbs.CloseVerb;
 import com.text_adventure.parser.verbs.ExitVerb;
 import com.text_adventure.parser.verbs.GameVerb;
 import com.text_adventure.parser.verbs.GameVerbAlias;
+import com.text_adventure.parser.verbs.HelpVerb;
 import com.text_adventure.parser.verbs.LookVerb;
 import com.text_adventure.parser.verbs.OpenVerb;
 import com.text_adventure.parser.verbs.PutVerb;
@@ -55,6 +57,7 @@ public class ParserSystem {
 		addVerb(new ThrowVerb());
 		addVerb(new WalkVerb());
 		addVerb(new ExitVerb());
+		addVerb(new HelpVerb());
 		
 		// Now some aliases
 		
@@ -91,6 +94,14 @@ public class ParserSystem {
 	 */
 	public GameVerb getVerbFromWord(String word) {
 		return wordToVerbMap.get(word);
+	}
+	
+	/**
+	 * Get the words that we can recognise
+	 * @return The words in a set
+	 */
+	public Set<String> getWordsForHelp() {
+		return wordToVerbMap.keySet();
 	}
 	
 	/**
