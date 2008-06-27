@@ -1,5 +1,6 @@
 package com.text_adventure.parser.verbs;
 
+import com.text_adventure.exception.GamestateChangeException;
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
@@ -13,7 +14,7 @@ import com.text_adventure.world_objects.GameWorld;
 public class TakeVerb extends GameVerb {
 	public void executeVerb(GameWorld world, ParserToken... sentence)
 							throws InvalidActionException, InvalidGrammarException,
-																UnknownObjectException {
+											UnknownObjectException, GamestateChangeException {
 		System.out.println("You don't feel like taking anything.");
 	}
 

@@ -23,7 +23,6 @@ public class WorldPlayer extends WorldObject implements Comparable<WorldObject> 
 	 * @param name The name of this object
 	 * @param description The description of this object
 	 * @param container Lets us know if we are allowed to contain children
-	 * @param type The type of object this is (furnature, key, whatever)
 	 */
 	public WorldPlayer(WorldObject parent, List<WorldObject> children,
 									String name, String description, boolean container) {

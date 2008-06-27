@@ -1,5 +1,8 @@
 package com.text_adventure.parser.verbs;
 
+import java.util.List;
+
+import com.text_adventure.exception.GamestateChangeException;
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
@@ -18,7 +21,18 @@ public abstract class GameVerb extends ParserToken {
 	 */
 	public abstract void executeVerb(GameWorld world, ParserToken... sentence)
 											throws InvalidActionException, InvalidGrammarException,
-																				UnknownObjectException;
+														UnknownObjectException, GamestateChangeException;
+
+	/**
+	 * Conveniece method for us
+	 * @param world The game world we are executing in
+	 * @param sentence The sentence (tokenized) that was parsed
+	 */
+	public void executeVerb(GameWorld world, List<ParserToken> sentence)
+											throws InvalidActionException, InvalidGrammarException,
+														UnknownObjectException, GamestateChangeException {
+		executeVerb(world, (ParserToken[]) sentence.toArray());
+	}
 	
 	/**
 	 * Return the help string for this verb

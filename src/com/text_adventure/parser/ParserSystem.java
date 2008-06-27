@@ -11,6 +11,7 @@ import com.text_adventure.parser.special_words.GameDirectionWord;
 import com.text_adventure.parser.special_words.GamePrepositionWord;
 import com.text_adventure.parser.special_words.GameSpecialWord;
 import com.text_adventure.parser.verbs.CloseVerb;
+import com.text_adventure.parser.verbs.ExitVerb;
 import com.text_adventure.parser.verbs.GameVerb;
 import com.text_adventure.parser.verbs.GameVerbAlias;
 import com.text_adventure.parser.verbs.LookVerb;
@@ -53,6 +54,7 @@ public class ParserSystem {
 		addVerb(new UseVerb());
 		addVerb(new ThrowVerb());
 		addVerb(new WalkVerb());
+		addVerb(new ExitVerb());
 		
 		// Now some aliases
 		
@@ -61,6 +63,7 @@ public class ParserSystem {
 		addVerb(new GameVerbAlias(getVerbFromWord("put"), "set-down"));
 		addVerb(new GameVerbAlias(getVerbFromWord("walk"), "move"));
 		addVerb(new GameVerbAlias(getVerbFromWord("walk"), "go"));
+		addVerb(new GameVerbAlias(getVerbFromWord("exit"), "quit"));
 		
 		// Now some special words we'll want
 		
