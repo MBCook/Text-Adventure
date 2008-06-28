@@ -2,6 +2,7 @@ package com.text_adventure.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,6 +44,11 @@ public class ParserSystem {
 	private Map<String, GameSpecialWord> wordToSpecialWordMap = new HashMap<String, GameSpecialWord>();
 	
 	/**
+	 * A list of words, like 'the', that we could care less about
+	 */
+	private Set<String> noiseWords = new HashSet<String>();
+	
+	/**
 	 * Initializes our verb list with all the code knows about
 	 */
 	public ParserSystem() {
@@ -77,6 +83,12 @@ public class ParserSystem {
 		addSpecialWord(new GameDirectionWord("east", WorldDirection.EAST));
 		addSpecialWord(new GameDirectionWord("south", WorldDirection.SOUTH));
 		addSpecialWord(new GameDirectionWord("west", WorldDirection.WEST));
+		
+		// And the noise words
+		
+		addNoiseWord("the");
+		addNoiseWord("to");
+		addNoiseWord("that");
 	}
 	
 	/**
@@ -85,6 +97,14 @@ public class ParserSystem {
 	 */
 	public void addVerb(GameVerb verb) {
 		wordToVerbMap.put(verb.getVerb(), verb);
+	}
+	
+	/**
+	 * Adds a word to the list of noise words we're ignoring
+	 * @param word The word to add
+	 */
+	public void addNoiseWord(String word) {
+		noiseWords.add(word);
 	}
 	
 	/**
@@ -139,6 +159,10 @@ public class ParserSystem {
 			throw new IllegalArgumentException("Sentence was null or empty");
 		}
 		
+		// Clear the sentence of punctuation we might run into
+		
+		sentence = sentence.replaceAll("[,\\.\\?:;'\"]", "");
+		
 		// OK, split it into words
 		
 		String[] words = ParserHelper.splitStringIntoWords(sentence.toLowerCase());
@@ -150,6 +174,12 @@ public class ParserSystem {
 				// We've got a word. Find out what it is
 				
 				word = word.trim();
+				
+				// Is it a word that is just noise to us?
+				
+				if (noiseWords.contains(word)) {
+					continue;	// Skip it
+				}
 				
 				// First, find out if it's a verb
 				
