@@ -74,9 +74,13 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	public String getDescription() {
 		String desc = description;
 		
-		desc = desc.replace("%s", getState());
+		if (getState() != null)
+			desc = desc.replace("%s", getState());
+		
 		desc = desc.replace("%c", "" + (children == null ? 0 : children.size()));
-		desc = desc.replace("%n", getName());
+		
+		if (getName() != null)
+			desc = desc.replace("%n", getName());
 		
 		return description;
 	}

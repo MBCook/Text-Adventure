@@ -29,10 +29,10 @@ public class TextAdventure {
 	public static void main(String args[]) throws Exception {
 		// Let's create a little grid of rooms.
 		
-		WorldRoom northWest = new WorldRoom(null, null, "NorthWestRoom", "The room in the north west corner");
-		WorldRoom northEast = new WorldRoom(null, null, "NorthEastRoom", "The room in the north east corner");
-		WorldRoom southWest = new WorldRoom(null, null, "SouthWestRoom", "The room in the south west corner");
-		WorldRoom southEast = new WorldRoom(null, null, "SouthEastRoom", "The room in the south east corner");
+		WorldRoom northWest = new WorldRoom(null, null, "NorthWestRoom", "The room in the north west corner of the house. You see hideous drapes and a worn avacado colored carpet.");
+		WorldRoom northEast = new WorldRoom(null, null, "NorthEastRoom", "The room in the north east corner of the house. There are cobwebs all over the place.");
+		WorldRoom southWest = new WorldRoom(null, null, "SouthWestRoom", "The room in the south west corner of the house. You notice an odd odor you can't identify.");
+		WorldRoom southEast = new WorldRoom(null, null, "SouthEastRoom", "The room in the south east corner of the house. It's quite cold. You'd think a room with southern exposure would get more sun.");
 		
 		northWest.setRoomInDirection(southWest, WorldDirection.SOUTH);
 		northWest.setRoomInDirection(northEast, WorldDirection.EAST);
