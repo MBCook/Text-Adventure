@@ -5,12 +5,14 @@ import java.util.List;
 import com.text_adventure.exception.GamestateChangeException;
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
+import com.text_adventure.exception.PlayerDeathException;
 import com.text_adventure.exception.UnknownObjectException;
 import com.text_adventure.parser.ParserHelper;
 import com.text_adventure.parser.ParserSystem;
 import com.text_adventure.parser.ParserToken;
 import com.text_adventure.parser.verbs.GameVerb;
 import com.text_adventure.world_objects.GameWorld;
+import com.text_adventure.world_objects.PossibleStates;
 import com.text_adventure.world_objects.WorldDirection;
 import com.text_adventure.world_objects.WorldPlayer;
 import com.text_adventure.world_objects.WorldRoom;
@@ -29,10 +31,10 @@ public class TextAdventure {
 	public static void main(String args[]) throws Exception {
 		// Let's create a little grid of rooms.
 		
-		WorldRoom northWest = new WorldRoom(null, null, "NorthWestRoom", "The room in the north west corner of the house. You see hideous drapes and a worn avacado colored carpet.");
-		WorldRoom northEast = new WorldRoom(null, null, "NorthEastRoom", "The room in the north east corner of the house. There are cobwebs all over the place.");
-		WorldRoom southWest = new WorldRoom(null, null, "SouthWestRoom", "The room in the south west corner of the house. You notice an odd odor you can't identify.");
-		WorldRoom southEast = new WorldRoom(null, null, "SouthEastRoom", "The room in the south east corner of the house. It's quite cold. You'd think a room with southern exposure would get more sun.");
+		WorldRoom northWest = new WorldRoom(null, null, "NorthWestRoom", "The room in the north west corner of the house. You see hideous drapes and a worn avacado colored carpet.", PossibleStates.NORMAL);
+		WorldRoom northEast = new WorldRoom(null, null, "NorthEastRoom", "The room in the north east corner of the house. There are cobwebs all over the place.", PossibleStates.NORMAL);
+		WorldRoom southWest = new WorldRoom(null, null, "SouthWestRoom", "The room in the south west corner of the house. You notice an odd odor you can't identify.", PossibleStates.NORMAL);
+		WorldRoom southEast = new WorldRoom(null, null, "SouthEastRoom", "The room in the south east corner of the house. It's quite cold. You'd think a room with southern exposure would get more sun.", PossibleStates.NORMAL);
 		
 		northWest.setRoomInDirection(southWest, WorldDirection.SOUTH);
 		northWest.setRoomInDirection(northEast, WorldDirection.EAST);
@@ -48,7 +50,7 @@ public class TextAdventure {
 		
 		// Now create a player
 		
-		WorldPlayer player = new WorldPlayer(null, null, "Yourself", "Yourself", true);
+		WorldPlayer player = new WorldPlayer(null, null, "Yourself", "Yourself", PossibleStates.ALIVE, true);
 
 		// The parser system
 		
@@ -81,7 +83,7 @@ public class TextAdventure {
 		
 		// Der Loop
 		
-		while (true) {
+		while (PossibleStates.ALIVE.equals(world.getPlayer().getState())) {
 			// Print a simple prompt
 			
 			String sentence = ParserHelper.readLine("? ", false);
@@ -117,10 +119,12 @@ public class TextAdventure {
 			} catch (Exception e) {
 				if ((e instanceof InvalidActionException) || (e instanceof InvalidGrammarException)
 						|| (e instanceof UnknownObjectException) || (e instanceof GamestateChangeException)) {
-					System.out.print("\n");
 					System.out.println(e.getMessage());
 					
-					break;	
+					if (e instanceof PlayerDeathException) {
+						// If they died, mark them as such
+						world.getPlayer().setState(PossibleStates.DEAD);
+					}
 				} else {
 					// Some kind of real exception we weren't expecting
 					
@@ -129,6 +133,10 @@ public class TextAdventure {
 			}
 		}
 		
-		System.out.println("\nExiting...");
+		// Print out that it's over, and their final score
+		
+		System.out.println("\n");
+		
+		world.getParser().getVerbFromWord("status").executeVerb(world, null);
 	}
 }

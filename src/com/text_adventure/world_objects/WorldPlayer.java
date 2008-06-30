@@ -22,11 +22,12 @@ public class WorldPlayer extends WorldObject implements Comparable<WorldObject> 
 	 * @param children Our children
 	 * @param name The name of this object
 	 * @param description The description of this object
+	 * @param state The state of this object
 	 * @param container Lets us know if we are allowed to contain children
 	 */
 	public WorldPlayer(WorldObject parent, List<WorldObject> children,
-									String name, String description, boolean container) {
-		super(parent, children, name, description, container);
+									String name, String description, PossibleStates state, boolean container) {
+		super(parent, children, name, description, state, container);
 	}
 	
 	/**

@@ -20,6 +20,7 @@ import com.text_adventure.parser.verbs.HelpVerb;
 import com.text_adventure.parser.verbs.LookVerb;
 import com.text_adventure.parser.verbs.OpenVerb;
 import com.text_adventure.parser.verbs.PutVerb;
+import com.text_adventure.parser.verbs.StatusVerb;
 import com.text_adventure.parser.verbs.TakeVerb;
 import com.text_adventure.parser.verbs.ThrowVerb;
 import com.text_adventure.parser.verbs.UseVerb;
@@ -64,6 +65,7 @@ public class ParserSystem {
 		addVerb(new WalkVerb());
 		addVerb(new ExitVerb());
 		addVerb(new HelpVerb());
+		addVerb(new StatusVerb());
 		
 		// Now some aliases
 		

@@ -24,6 +24,10 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	 */
 	private String name = null;
 	/**
+	 * The state of this object
+	 */
+	public PossibleStates state = null;
+	/**
 	 * The description of this object. This can contain some special characters.
 	 * %s refers to the state of this object, %n refers to it's name,
 	 * and %c is the number of things it contains.
@@ -40,15 +44,17 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	 * @param children Our children
 	 * @param name The name of this object
 	 * @param description The description of this object
+	 * @param state The current state of this object
 	 * @param container Lets us know if we are allowed to contain children
 	 */
 	public WorldObject(WorldObject parent, List<WorldObject> children,
-							String name, String description, boolean container) {
+							String name, String description, PossibleStates state, boolean container) {
 		this.parent = parent;
 		this.children = children;
 		this.name = name;
 		this.description = description;
 		this.container = container;
+		this.state = state;
 	}
 	
 	/**
@@ -74,9 +80,7 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	public String getDescription() {
 		String desc = description;
 		
-		if (getState() != null)
-			desc = desc.replace("%s", getState());
-		
+		desc = desc.replace("%s", getState().name().toLowerCase());
 		desc = desc.replace("%c", "" + (children == null ? 0 : children.size()));
 		
 		if (getName() != null)
@@ -91,6 +95,22 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	 */
 	public WorldObject getParent() {
 		return parent;
+	}
+	
+	/**
+	 * Set the state of this object
+	 * @param state The state this object should be in
+	 */
+	public void setState(PossibleStates state) {
+		this.state = state;
+	}
+	
+	/**
+	 * Get the state of this object
+	 * @return The state this object is in
+	 */
+	public PossibleStates getState() {
+		return state;
 	}
 	
 	/**
@@ -177,13 +197,6 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	 */
 	public boolean equals(WorldObject other) {
 		return getName().equals(other.getName());
-	}
-	
-	/**
-	 * Get the current state of this object
-	 */
-	public String getState() {
-		return null;
 	}
 	
 	/**

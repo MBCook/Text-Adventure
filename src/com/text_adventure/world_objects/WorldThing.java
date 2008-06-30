@@ -12,10 +12,6 @@ public class WorldThing extends WorldObject {
 	 */
 	public String type = null;
 	/**
-	 * The state of this object
-	 */
-	public String state = null;
-	/**
 	 * If we can be moved (like a key) or not (like a big table)
 	 */
 	public boolean moveable = true;
@@ -30,10 +26,9 @@ public class WorldThing extends WorldObject {
 	 * @param type The type of object this is (furnature, key, whatever)
 	 */
 	public WorldThing(WorldObject parent, List<WorldObject> children, String name,
-						String description, boolean container, String type, String state, boolean moveable) {
-		super(parent, children, name, description, container);
+						String description, boolean container, String type, PossibleStates state, boolean moveable) {
+		super(parent, children, name, description, state, container);
 		this.type = type;
-		this.state = state;
 		this.moveable = moveable;
 	}
 	
@@ -53,18 +48,6 @@ public class WorldThing extends WorldObject {
 		return type;
 	}
 	
-	/**
-	 * Set the state of this object
-	 * @param state The state this object should be in
-	 */
-	public void setState(String state) {
-		this.state = state;
-	}
-	
-	public String getState() {
-		return state;
-	}
-	
 	public boolean isRoom() {
 		// We are not a room
 		return false;
@@ -76,6 +59,6 @@ public class WorldThing extends WorldObject {
 	}
 	
 	public boolean isMoveable() {
-		return moveable;
+		return moveable && !PossibleStates.STUCK.equals(getState());
 	}
 }

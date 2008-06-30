@@ -23,10 +23,11 @@ public class WorldRoom extends WorldObject {
 	 * @param children Our children
 	 * @param name The name of this object
 	 * @param description The description of this object
+	 * @param state The current state of the room
 	 */
 	public WorldRoom(WorldObject parent, List<WorldObject> children,
-												String name, String description) {
-		super(parent, children, name, description, true);
+												String name, String description, PossibleStates state) {
+		super(parent, children, name, description, state, true);
 	}
 	
 	/**
@@ -53,7 +54,11 @@ public class WorldRoom extends WorldObject {
 	 * @throws PlayerDeathException When they do something stupid (i.e. killed by guillotine over door)
 	 */
 	public void attemptToEnter() throws InvalidActionException, PlayerDeathException {
-		// Nothing
+		if (PossibleStates.LOCKED.equals(this.getState())) {
+			throw new InvalidActionException("The room is locked.");
+		}
+		
+		// It's OK unless a subclass says otherwise
 	}
 	
 	/**
@@ -62,6 +67,10 @@ public class WorldRoom extends WorldObject {
 	 * @throws PlayerDeathException When they do something stupid (i.e. trigger land-mine)
 	 */
 	public void attemptToExit() throws InvalidActionException, PlayerDeathException {
+		if (PossibleStates.LOCKED.equals(this.getState())) {
+			throw new InvalidActionException("The room is locked.");
+		}
+		
 		// Nothing
 	}
 	
