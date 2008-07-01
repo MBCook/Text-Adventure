@@ -24,6 +24,10 @@ public class TakeVerb extends GameVerb {
 		return "Takes stuff";
 	}
 
+	public String getExtendedHelp() {
+		return "This command isn't implemted.";
+	}
+	
 	public String getVerb() {
 		return "take";
 	}

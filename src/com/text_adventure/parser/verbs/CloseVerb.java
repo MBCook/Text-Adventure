@@ -24,6 +24,10 @@ public class CloseVerb extends GameVerb {
 		return "Closes things";
 	}
 
+	public String getExtendedHelp() {
+		return "This command isn't implemted.";
+	}
+	
 	public String getVerb() {
 		return "close";
 	}

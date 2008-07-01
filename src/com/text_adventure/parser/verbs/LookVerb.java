@@ -7,7 +7,6 @@ import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
 import com.text_adventure.parser.ParserToken;
-import com.text_adventure.parser.special_words.GameSpecialWord;
 import com.text_adventure.world_objects.GameWorld;
 import com.text_adventure.world_objects.WorldObject;
 import com.text_adventure.world_objects.WorldThing;
@@ -24,41 +23,53 @@ public class LookVerb extends GameVerb {
 
 		WorldObject object = null;
 		
-		if (sentence.size() == 1) {	// No other words, just "look"
+		int sentenceSize = sentence.size();
+		
+		if (sentenceSize == 1) {	// No other words, just "look"
 			// Look around the room. This is acomplished by simply printing the room description
 			
 			object = world.getRoom();
-		} else {
+			
+			System.out.println(object.getDescription());
+		} else if ((sentenceSize == 2) || (sentenceSize == 3)) {
+			// OK, some quick grammar check stuff. If the second word is "at", we'll skip it
+			
+			int indexToLookAt = 1;
+			
+			if (world.getParser().getSpecialWordFromWord("at").equals(sentence.get(indexToLookAt))) {
+				// It's an "at", ignore it
+				
+				indexToLookAt++;
+			}
+			
 			// We're looking at a specific object.
 			
-			for (int i = 1; i < sentence.size(); i++) {
-				ParserToken token = sentence.get(i);
+			ParserToken token = sentence.get(indexToLookAt);
 				
-				if (token instanceof GameSpecialWord) {
-					// It's something like "at", which we'll ignore
-					
-					continue;
-				} else if (token instanceof WorldThing) {
-					object = (WorldObject) token;
-					
-					break;
-				}
+			if (token instanceof WorldThing) {
+				object = (WorldObject) token;
+				
+				System.out.println(object.getDescription());
+			} else {
+				// The word we were given is not a thing, complalin
+				
+				throw new InvalidGrammarException("You need to specify something to look at, or nothing to simply look around.");
 			}
+		} else {
+			// They gave us a sentence that was too long. Throw a grammer exception
 			
-			// If we still don't have an object, we're confused
-			
-			if (object == null) {
-				throw new InvalidGrammarException("You need to specify something to look at, or nothing to simply look around");
-			}
+			throw new InvalidGrammarException("You need to specify something to look at, or nothing to simply look around.");
 		}
-
-		System.out.println(object.getDescription());
 	}
 
 	public String getHelp() {
 		return "Looks at stuff";
 	}
 
+	public String getExtendedHelp() {
+		return "look [[at] object]\n\nIf given an object, it prints out a description of that object. If no object is given, looks around the room you are currently in.";
+	}
+	
 	public String getVerb() {
 		return "look";
 	}

@@ -30,6 +30,10 @@ public class ThrowVerb extends GameVerb {
 		return "Throws things";
 	}
 
+	public String getExtendedHelp() {
+		return "This command isn't implemted.";
+	}
+	
 	public String getVerb() {
 		return "throw";
 	}

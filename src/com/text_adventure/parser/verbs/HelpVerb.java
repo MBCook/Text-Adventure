@@ -19,37 +19,61 @@ public class HelpVerb extends GameVerb {
 	public void executeVerb(GameWorld world, List<ParserToken> sentence)
 							throws InvalidActionException, InvalidGrammarException,
 										UnknownObjectException, GamestateChangeException {
-		List<String> words = new ArrayList<String>(world.getParser().getWordsForHelp());
-		
-		Collections.sort(words);
-		
-		System.out.println("\nThe universe has decreed the following verbs acceptable:");
-		
-		for (String word : words) {
-			GameVerb verb = world.getParser().getVerbFromWord(word);
+		if (sentence.size() == 1) {
+			// They didn't sepcify a target, print general help
 			
-			System.out.print("\t");
+			List<String> words = new ArrayList<String>(world.getParser().getWordsForHelp());
 			
-			if (verb instanceof GameVerbAlias) {
-				GameVerbAlias alias = (GameVerbAlias) verb;
+			Collections.sort(words);
+			
+			System.out.println("\nThe universe has decreed the following verbs acceptable:");
+			
+			for (String word : words) {
+				GameVerb verb = world.getParser().getVerbFromWord(word);
 				
-				System.out.print(alias.getVerb());
-				System.out.print("\t\tAlias for ");
-				System.out.println(alias.getTargetVerb().getVerb());
-			} else {
-				System.out.print(verb.getVerb());
-				System.out.print("\t\t");
-				System.out.println(verb.getHelp());				
+				System.out.print("\t");
+				
+				if (verb instanceof GameVerbAlias) {
+					GameVerbAlias alias = (GameVerbAlias) verb;
+					
+					System.out.print(alias.getVerb());
+					System.out.print("\t\tAlias for ");
+					System.out.println(alias.getTargetVerb().getVerb());
+				} else {
+					System.out.print(verb.getVerb());
+					System.out.print("\t\t");
+					System.out.println(verb.getHelp());				
+				}
 			}
+		} else if (sentence.size() == 2) {
+			ParserToken token = sentence.get(1);
+			
+			if (token instanceof GameVerb) {
+				// They want help with a verb, print it's extended help
+				
+				GameVerb verb = (GameVerb) token;
+				
+				System.out.println(verb.getExtendedHelp());
+			} else {
+				// They didn't give us a verb, that's a gramatical error
+				
+				throw new InvalidGrammarException("The help command must be called alone, or with a verb.");
+			}
+		} else {
+			// They put too many words in there, so complain
+			
+			throw new InvalidGrammarException("The help command only takes one parameter, a verb.");
 		}
-		
-		System.out.print("\n");
 	}
 
 	public String getHelp() {
-		return "Prints all known verbs";
+		return "Prints all known verbs, explains commands";
 	}
 
+	public String getExtendedHelp() {
+		return "help [verb]\n\nCalling help with an argument (i.e. \"help walk\") will tell you how to use that command. Without an argument help prints a list of known commands.";
+	}
+	
 	public String getVerb() {
 		return "help";
 	}

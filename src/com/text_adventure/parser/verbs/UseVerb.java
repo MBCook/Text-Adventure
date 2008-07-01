@@ -24,6 +24,10 @@ public class UseVerb extends GameVerb {
 		return "Uses things";
 	}
 
+	public String getExtendedHelp() {
+		return "This command isn't implemted.";
+	}
+	
 	public String getVerb() {
 		return "use";
 	}

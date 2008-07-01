@@ -18,6 +18,10 @@ public class ExitVerb extends GameVerb {
 	public void executeVerb(GameWorld world, List<ParserToken> sentence)
 							throws InvalidActionException, InvalidGrammarException,
 													UnknownObjectException, GamestateChangeException {
+		if (sentence.size() != 1) {
+			throw new InvalidGrammarException("The exit doesn't take any parameters.");
+		}
+		
 		throw new PlayerDeathException("You commit seppuku, then black out.");
 	}
 
@@ -25,6 +29,10 @@ public class ExitVerb extends GameVerb {
 		return "Exits the game";
 	}
 
+	public String getExtendedHelp() {
+		return "Exits the game world, killing you in the process. Afterward, it prints out your status.";
+	}
+	
 	public String getVerb() {
 		return "exit";
 	}

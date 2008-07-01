@@ -17,6 +17,10 @@ public class StatusVerb extends GameVerb {
 	public void executeVerb(GameWorld world, List<ParserToken> sentence)
 							throws InvalidActionException, InvalidGrammarException,
 										UnknownObjectException, GamestateChangeException {
+		if (sentence.size() != 1) {
+			throw new InvalidGrammarException("The status command doesn't take parameters.");
+		}
+		
 		System.out.println("Your current status is: " + world.getPlayer().getState() + ".");
 		System.out.println("You have taken " + world.getPlayer().getSteps() + " steps.");
 		System.out.println("Your score is: " + world.getPlayer().getScore() + ".");
@@ -26,6 +30,10 @@ public class StatusVerb extends GameVerb {
 		return "Print player status";
 	}
 
+	public String getExtendedHelp() {
+		return "Status prints out a few little stats about the player. It takes no arguments.";
+	}
+	
 	public String getVerb() {
 		return "status";
 	}

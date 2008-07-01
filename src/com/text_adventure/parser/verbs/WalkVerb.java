@@ -19,20 +19,21 @@ public class WalkVerb extends GameVerb {
 	public void executeVerb(GameWorld world, List<ParserToken> sentence)
 							throws InvalidActionException, InvalidGrammarException,
 										UnknownObjectException, GamestateChangeException {
+		// Quick grammar check
+		
+		if (sentence.size() != 2) {
+			throw new InvalidGrammarException("You must specify the direction to move in.");
+		}
+		
 		// Get the direction they want to move in
 		
 		GameDirectionWord direction = null;
 		
-		for (int i = 1; i < sentence.size(); i++) {
-			ParserToken token = sentence.get(i);
+		ParserToken token = sentence.get(1);
 			
-			if (token instanceof GameDirectionWord) {
-				direction = (GameDirectionWord) token;
-				break;
-			}
-		}
-		
-		if (direction == null) {
+		if (token instanceof GameDirectionWord) {
+			direction = (GameDirectionWord) token;
+		} else {
 			throw new InvalidGrammarException("You must specify the direction to move in.");
 		}	
 		
@@ -68,6 +69,10 @@ public class WalkVerb extends GameVerb {
 		return "Walks around";
 	}
 
+	public String getExtendedHelp() {
+		return "walk (direction)\n\nWalks in the given direction.";
+	}
+	
 	public String getVerb() {
 		return "walk";
 	}

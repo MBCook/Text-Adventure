@@ -263,10 +263,17 @@ public class ParserSystem {
 		}
 		
 		// Check that the verb at the start of the sentence is the only verb
-		
-		for (int i = 1; i < tokens.size(); i++) {
-			if (tokens.get(i) instanceof GameVerb) {
-				throw new InvalidGrammarException("No non-predicate verb phrases, Mr. English Major");
+
+		if (getVerbFromWord("help").equals(tokens.get(0))) {
+			// The one exception is the "help" verb, it gets to take another verb as an argument
+			// That means this is OK
+		} else {
+			// Only one verb per sentence is allowed in this case (i.e. no "walk put north cookie")
+			
+			for (int i = 1; i < tokens.size(); i++) {
+				if (tokens.get(i) instanceof GameVerb) {
+					throw new InvalidGrammarException("No non-predicate verb phrases, Mr. English Major");
+				}
 			}
 		}
 		

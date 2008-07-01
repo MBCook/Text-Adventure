@@ -1,5 +1,6 @@
 package com.textadventure;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.text_adventure.exception.GamestateChangeException;
@@ -133,10 +134,14 @@ public class TextAdventure {
 			}
 		}
 		
-		// Print out that it's over, and their final score
+		// Print out their final status. We have to fake a sentence to do this legally 
 		
-		System.out.println("\n");
+		GameVerb statusVerb = world.getParser().getVerbFromWord("status");
 		
-		world.getParser().getVerbFromWord("status").executeVerb(world, null);
+		List<ParserToken> fakeSentence = new ArrayList<ParserToken>();
+		
+		fakeSentence.add(statusVerb);
+		
+		statusVerb.executeVerb(world, fakeSentence);
 	}
 }

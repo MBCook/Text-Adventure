@@ -47,9 +47,15 @@ public class GameVerbAlias extends GameVerb {
 		return targetVerb;
 	}
 	
-	public String getHelp() {
-		// Aliases don't have help
+	public String getExtendedHelp() {
+		// Aliases don't have extended help, so return what the target verb does
 		
-		return null;
+		return targetVerb.getExtendedHelp();
+	}
+	
+	public String getHelp() {
+		// Aliases don't have help, so return what the target verb does
+		
+		return targetVerb.getHelp();
 	}
 }

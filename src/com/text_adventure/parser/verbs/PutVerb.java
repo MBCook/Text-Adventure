@@ -24,6 +24,10 @@ public class PutVerb extends GameVerb {
 		return "Puts stuff";
 	}
 
+	public String getExtendedHelp() {
+		return "This command isn't implemted.";
+	}
+	
 	public String getVerb() {
 		return "put";
 	}

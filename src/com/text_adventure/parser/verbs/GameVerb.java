@@ -30,6 +30,12 @@ public abstract class GameVerb extends ParserToken {
 	public abstract String getHelp();
 	
 	/**
+	 * Gets the extended help text (how to use a command)
+	 * @return The help string
+	 */
+	public abstract String getExtendedHelp();
+	
+	/**
 	 * Get the word that this verb represents
 	 * @return The word
 	 */
