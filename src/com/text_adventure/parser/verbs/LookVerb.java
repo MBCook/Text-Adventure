@@ -67,7 +67,7 @@ public class LookVerb extends GameVerb {
 	}
 
 	public String getExtendedHelp() {
-		return "look [[at] object]\n\nIf given an object, it prints out a description of that object. If no object is given, looks around the room you are currently in.";
+		return "look [[at] OBJECT]\n\nIf given an object, it prints out a description of that object. If no object is given, looks around the room you are currently in.";
 	}
 	
 	public String getVerb() {

@@ -70,7 +70,7 @@ public class WalkVerb extends GameVerb {
 	}
 
 	public String getExtendedHelp() {
-		return "walk (direction)\n\nWalks in the given direction.";
+		return "walk DIRECTION\n\nWalks in the given direction.";
 	}
 	
 	public String getVerb() {

@@ -71,7 +71,7 @@ public class HelpVerb extends GameVerb {
 	}
 
 	public String getExtendedHelp() {
-		return "help [verb]\n\nCalling help with an argument (i.e. \"help walk\") will tell you how to use that command. Without an argument help prints a list of known commands.";
+		return "help [VERB]\n\nCalling help with an argument (i.e. \"help walk\") will tell you how to use that command. Without an argument help prints a list of known commands.";
 	}
 	
 	public String getVerb() {
