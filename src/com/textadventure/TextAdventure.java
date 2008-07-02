@@ -20,7 +20,6 @@ import com.text_adventure.world_objects.WorldRoom;
 
 /**
  * A test class I can use to make sure things are jiving as I'd like
- * 
  * @author mcook
  */
 public class TextAdventure {
