@@ -17,6 +17,7 @@ import com.text_adventure.world_objects.PossibleStates;
 import com.text_adventure.world_objects.WorldDirection;
 import com.text_adventure.world_objects.WorldPlayer;
 import com.text_adventure.world_objects.WorldRoom;
+import com.text_adventure.world_objects.WorldThing;
 
 /**
  * A test class I can use to make sure things are jiving as I'd like
@@ -59,6 +60,14 @@ public class TextAdventure {
 		// Now a game world to hold everything
 		
 		GameWorld world = new GameWorld(player, southWest, parser);
+		
+		// Now we'll make an object and put it in the north east room, and register it with the world
+		
+		WorldThing key = new WorldThing(northEast, null, "key", "The magic key of Grazelphest.", false, "key", PossibleStates.NORMAL, true);
+		
+		northEast.addChild(key);
+		
+		world.addObjectToMap(key);
 		
 		// Now start the main loop!
 		

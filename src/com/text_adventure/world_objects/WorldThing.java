@@ -24,6 +24,8 @@ public class WorldThing extends WorldObject {
 	 * @param description The description of this object
 	 * @param container Lets us know if we are allowed to contain children
 	 * @param type The type of object this is (furnature, key, whatever)
+	 * @param state The state of the object
+	 * @param moveable If the object can be moved (like a key) or not (like a large desk)
 	 */
 	public WorldThing(WorldObject parent, List<WorldObject> children, String name,
 						String description, boolean container, String type, PossibleStates state, boolean moveable) {

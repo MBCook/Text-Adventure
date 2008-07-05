@@ -137,9 +137,15 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	public WorldObject containsObjectWithName(String name) {
 		// Look at each of our children
 		
+		if (children == null)
+			return null;	// No children means we'll never find it
+		
 		for (WorldObject child : children) {
 			// It is this child?
-			if (child.getName().equals(name)) {
+			
+			if (child == null) {
+				continue;
+			} else if (child.getName().equals(name)) {
 				return child;
 			} else if (child.isContainer()) {
 				// Is it IN this child?
@@ -173,7 +179,7 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	 * @param child The child to remove
 	 * @throws InvalidActionException if you try to do something you shouldn't
 	 */
-	public void removeChild(WorldObject child) throws Exception {
+	public void removeChild(WorldObject child) throws InvalidActionException {
 		if (!container)
 			throw new InvalidActionException("A " + name + " can't hold things");
 		if (children == null)
