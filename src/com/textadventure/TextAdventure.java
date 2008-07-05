@@ -144,6 +144,8 @@ public class TextAdventure {
 		
 		// Print out their final status. We have to fake a sentence to do this legally 
 		
+		System.out.println("");	// Just some spacing so things look nicer
+		
 		GameVerb statusVerb = world.getParser().getVerbFromWord("status");
 		
 		List<ParserToken> fakeSentence = new ArrayList<ParserToken>();
