@@ -2,8 +2,6 @@ package com.text_adventure.parser.verbs;
 
 import java.util.List;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
 import com.text_adventure.exception.GamestateChangeException;
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.InvalidGrammarException;
