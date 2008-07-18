@@ -1,8 +1,10 @@
 package com.text_adventure.world_objects;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.text_adventure.exception.InvalidActionException;
 import com.text_adventure.exception.PlayerDeathException;
@@ -16,6 +18,8 @@ public class WorldRoom extends WorldObject {
 	 * The rooms that we are attached to
 	 */
 	private Map<WorldDirection, WorldRoom> roomExits = new HashMap<WorldDirection, WorldRoom>();
+	
+	private Set<WorldObject> specialObjects = new HashSet<WorldObject>();
 	
 	/**
 	 * Set us up with the things we know about
@@ -62,7 +66,7 @@ public class WorldRoom extends WorldObject {
 	}
 	
 	/**
-	 * A funciton called when the player tries to exit this room
+	 * A function called when the player tries to exit this room
 	 * @throws InvalidActionException When they try to do something they shouldn't (i.e. chained to floor)
 	 * @throws PlayerDeathException When they do something stupid (i.e. trigger land-mine)
 	 */
@@ -72,6 +76,31 @@ public class WorldRoom extends WorldObject {
 		}
 		
 		// Nothing
+	}
+	
+	/**
+	 * Tells us if the object is special (the description talks about it) or not (just on the floor)
+	 * @param thing The object to find out about
+	 * @return The answer
+	 */
+	public boolean isObjectSpecialToThisRoom(WorldObject thing) {
+		return specialObjects.contains(thing);
+	}
+	
+	/**
+	 * Add an object to the list of special objects we know about
+	 * @param thing The thing to add
+	 */
+	public void addSpecialObject(WorldObject thing) {
+		specialObjects.add(thing);
+	}
+	
+	/**
+	 * Remove an object from the list of special objects we know about
+	 * @param thing The thing to remove
+	 */
+	public void removeSpecialObject(WorldObject thing) {
+		specialObjects.remove(thing);
 	}
 	
 	public boolean isRoom() {

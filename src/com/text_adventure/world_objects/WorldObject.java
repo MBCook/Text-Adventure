@@ -188,6 +188,14 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	}
 
 	/**
+	 * Return if we have children or not
+	 * @return The answer
+	 */
+	public boolean hasChildren() {
+		return ((children != null) && (children.size() > 0));
+	}
+	
+	/**
 	 * Compare this object to another (for sorting purposes)
 	 * @param other The object to compare to
 	 * @return The result of the comparison
