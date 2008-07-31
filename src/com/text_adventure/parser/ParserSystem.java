@@ -81,6 +81,7 @@ public class ParserSystem {
 		addSpecialWord(new GamePrepositionWord("in", WorldPreposition.IN));
 		addSpecialWord(new GamePrepositionWord("at", WorldPreposition.AT));
 		addSpecialWord(new GamePrepositionWord("on", WorldPreposition.ON));
+		addSpecialWord(new GamePrepositionWord("from", WorldPreposition.FROM));
 		addSpecialWord(new GameDirectionWord("north", WorldDirection.NORTH));
 		addSpecialWord(new GameDirectionWord("east", WorldDirection.EAST));
 		addSpecialWord(new GameDirectionWord("south", WorldDirection.SOUTH));
