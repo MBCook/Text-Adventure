@@ -8,6 +8,7 @@ import com.text_adventure.exception.InvalidGrammarException;
 import com.text_adventure.exception.UnknownObjectException;
 import com.text_adventure.parser.ParserToken;
 import com.text_adventure.world_objects.GameWorld;
+import com.text_adventure.world_objects.PossibleStates;
 import com.text_adventure.world_objects.WorldObject;
 import com.text_adventure.world_objects.WorldThing;
 
@@ -77,6 +78,12 @@ public class LookVerb extends GameVerb {
 				object = (WorldObject) token;
 				
 				System.out.println(object.getDescription());
+				
+				// Now let's print some stuff out about the item's status (if it is abnormal).
+				
+				if (!object.getState().equals(PossibleStates.NORMAL)) {
+					System.out.println("It appears to be " + object.getState().toString().toLowerCase() + ".");
+				}
 			} else {
 				// The word we were given is not a thing, complalin
 				

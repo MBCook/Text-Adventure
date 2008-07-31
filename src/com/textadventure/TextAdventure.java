@@ -69,6 +69,16 @@ public class TextAdventure {
 		
 		world.addObjectToMap(key);
 		
+		// And how about a box to hold things in the north west room!
+		
+		// Note that our box is fixed and shouldn't be moveable, and should initially be closed.
+		
+		WorldThing box = new WorldThing(northWest, null, "box", "A magic box of hiding stuff.", true, "box", PossibleStates.CLOSED, false);
+		
+		northWest.addChild(box);
+		
+		world.addObjectToMap(box);
+		
 		// Now start the main loop!
 		
 		mainLoop(world);
