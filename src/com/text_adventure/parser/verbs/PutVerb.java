@@ -23,14 +23,14 @@ public class PutVerb extends GameVerb {
 											UnknownObjectException, GamestateChangeException {
 		GamePrepositionWord in = (GamePrepositionWord) world.getParser().getSpecialWordFromWord("in");
 		
-		// OK, we should only have one argument: the thing to take. It should be a WorldThing
+		// OK, we should have up to three arguments
 		
 		if (sentence.size() < 2) {
-			throw new InvalidGrammarException("You must specify what you would like to take.");
+			throw new InvalidGrammarException("You must specify what you would like to put.");
 		} else if (sentence.size() > 4) {
-			throw new InvalidGrammarException("You must specify only one thing to take, and a place to put it.");
+			throw new InvalidGrammarException("You must specify only one thing to put, and a place to put it.");
 		} else if (!(sentence.get(1) instanceof WorldThing)) {
-			throw new InvalidGrammarException("You must specify something you can actually take.");
+			throw new InvalidGrammarException("You must specify something you can actually put.");
 		} else if (!(sentence.get(sentence.size() - 1) instanceof WorldThing)) {
 			// The last thing needs to be a thing, no matter what
 			throw new InvalidGrammarException("You must specify somewhere to put it.");
@@ -62,7 +62,7 @@ public class PutVerb extends GameVerb {
 			// Sanity checks
 			
 			if (!destination.isContainer()) {
-				throw new InvalidActionException("You can not put anything in the " + destination.getName());
+				throw new InvalidActionException("You can not put anything in the " + destination.getName() + ".");
 			} else if (!PossibleStates.OPEN.equals(destination.getState())) {
 				throw new InvalidActionException("The " + destination.getName() + " isn't open.");
 			}
