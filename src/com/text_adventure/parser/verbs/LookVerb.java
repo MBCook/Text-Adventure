@@ -60,12 +60,16 @@ public class LookVerb extends GameVerb {
 				}
 			}
 		} else if ((sentenceSize == 2) || (sentenceSize == 3)) {
-			// OK, some quick grammar check stuff. If the second word is "at", we'll skip it
+			// OK, some quick grammar check stuff. If the second word is "at" or "in", we'll skip it
 			
 			int indexToLookAt = 1;
 			
 			if (world.getParser().getSpecialWordFromWord("at").equals(sentence.get(indexToLookAt))) {
 				// It's an "at", ignore it
+				
+				indexToLookAt++;
+			} else if (world.getParser().getSpecialWordFromWord("in").equals(sentence.get(indexToLookAt))) {
+				// It's an "in", ignore it
 				
 				indexToLookAt++;
 			}
@@ -83,6 +87,32 @@ public class LookVerb extends GameVerb {
 				
 				if (!object.getState().equals(PossibleStates.NORMAL)) {
 					System.out.println("It appears to be " + object.getState().toString().toLowerCase() + ".");
+				
+					if (object.isContainer() && object.getState().equals(PossibleStates.OPEN)
+																			&& object.hasChildren()) {
+						StringBuffer thingsInObject = new StringBuffer();
+						
+						for (WorldObject thingOnFloor : object.getChildren()) {
+							if (!world.getRoom().isObjectSpecialToThisRoom(thingOnFloor)) {
+								// We care about this
+								
+								thingsInObject.append(addArticleToObject(thingOnFloor.getName()));
+								thingsInObject.append(", ");
+							}
+						}
+						
+						if (thingsInObject.length() > 0) {
+							// Get rid of the ", " at the end of the string 
+							
+							thingsInObject.delete(thingsInObject.length() - 2, thingsInObject.length());
+							
+							// Print out what we found.
+							
+							System.out.print("\n");							// Blank line
+							System.out.print("In the " + object.getName() + " you see: ");
+							System.out.println(thingsInObject.toString());
+						}
+					}
 				}
 			} else {
 				// The word we were given is not a thing, complalin
@@ -101,7 +131,7 @@ public class LookVerb extends GameVerb {
 	}
 
 	public String getExtendedHelp() {
-		return "look [[at] OBJECT]\n\nIf given an object, it prints out a description of that object. If no object is given, looks around the room you are currently in.";
+		return "look [[at/in] OBJECT]\n\nIf given an object, it prints out a description of that object. If no object is given, looks around the room you are currently in.";
 	}
 	
 	public String getVerb() {
