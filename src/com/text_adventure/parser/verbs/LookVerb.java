@@ -27,7 +27,7 @@ public class LookVerb extends GameVerb {
 		int sentenceSize = sentence.size();
 		
 		if (sentenceSize == 1) {	// No other words, just "look"
-			// Look around the room. This is acomplished by simply printing the room description
+			// Look around the room. This is accomplished by simply printing the room description
 			
 			object = world.getRoom();
 			
@@ -115,12 +115,12 @@ public class LookVerb extends GameVerb {
 					}
 				}
 			} else {
-				// The word we were given is not a thing, complalin
+				// The word we were given is not a thing, complain
 				
 				throw new InvalidGrammarException("You need to specify something to look at, or nothing to simply look around.");
 			}
 		} else {
-			// They gave us a sentence that was too long. Throw a grammer exception
+			// They gave us a sentence that was too long. Throw a grammar exception
 			
 			throw new InvalidGrammarException("You need to specify something to look at, or nothing to simply look around.");
 		}

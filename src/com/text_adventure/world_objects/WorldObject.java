@@ -49,6 +49,10 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	 */
 	public WorldObject(WorldObject parent, List<WorldObject> children,
 							String name, String description, PossibleStates state, boolean container) {
+		if ((container == false) && (children != null) && (children.size() > 0)) {
+			throw new IllegalArgumentException("Only containers may have children");
+		}
+		
 		this.parent = parent;
 		this.children = children;
 		this.name = name;
@@ -59,7 +63,7 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	
 	/**
 	 * Return whether or not we can contain things
-	 * @return Wheter or not we can contain things
+	 * @return Whether or not we can contain things
 	 */
 	public boolean isContainer() {
 		return container;
@@ -227,7 +231,7 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	
 	/**
 	 * Whether or not this item can be moved (i.e. picked up)
-	 * @return If we are moveable
+	 * @return If we are movable
 	 */
-	public abstract boolean isMoveable();
+	public abstract boolean isMovable();
 }

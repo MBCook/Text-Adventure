@@ -38,11 +38,11 @@ public class PutVerb extends GameVerb {
 			throw new InvalidGrammarException("The only preposition you can use is 'in'.");
 		}
 		
-		// If we're here, we have an actual object. It should be in our inventory, not stuck, and moveable
+		// If we're here, we have an actual object. It should be in our inventory, not stuck, and movable
 		
 		WorldThing object = (WorldThing) sentence.get(1);
 		
-		if (!object.isMoveable()) {
+		if (!object.isMovable()) {
 			throw new InvalidActionException("You are unable to put down the " + object.getName() + ".");
 		} else if (PossibleStates.STUCK.equals(object.getState())) {
 			throw new InvalidActionException("The " + object.getName() + " is stuck, so you can't put it down.");

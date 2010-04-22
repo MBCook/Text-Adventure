@@ -103,17 +103,20 @@ public class WorldRoom extends WorldObject {
 		specialObjects.remove(thing);
 	}
 	
+	@Override
 	public boolean isRoom() {
 		// We are a room
 		return true;
 	}
 	
+	@Override
 	public boolean isPlayer() {
 		// We are not a player
 		return false;
 	}
 	
-	public boolean isMoveable() {
+	@Override
+	public boolean isMovable() {
 		// We can't be picked up and moved
 		return false;
 	}

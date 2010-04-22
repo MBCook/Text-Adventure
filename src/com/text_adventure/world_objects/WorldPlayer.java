@@ -85,17 +85,20 @@ public class WorldPlayer extends WorldObject implements Comparable<WorldObject> 
 		return steps;
 	}
 	
+	@Override
 	public boolean isRoom() {
 		// We are not a room.
 		return false;
 	}
 	
+	@Override
 	public boolean isPlayer() {
 		// We are the player. We rule.
 		return true;
 	}
 
-	public boolean isMoveable() {
+	@Override
+	public boolean isMovable() {
 		// We can't be picked up, so this is just incase.
 		return false;
 	}

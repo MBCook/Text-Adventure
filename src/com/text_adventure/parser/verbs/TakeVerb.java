@@ -43,7 +43,7 @@ public class TakeVerb extends GameVerb {
 		
 		WorldThing object = (WorldThing) sentence.get(1);
 		
-		if (!object.isMoveable()) {
+		if (!object.isMovable()) {
 			throw new InvalidActionException("You are unable to move the " + object.getName() + ".");
 		} else if (PossibleStates.STUCK.equals(object.getState())) {
 			throw new InvalidActionException("The " + object.getName() + " is stuck, so you can't move it.");
