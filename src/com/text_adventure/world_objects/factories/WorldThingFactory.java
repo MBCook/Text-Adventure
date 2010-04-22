@@ -84,7 +84,7 @@ public class WorldThingFactory {
 	/**
 	 * Create the actual object, and return it
 	 * @return The WorldThing we made
-	 * @throws InvalidActionException If the given parent can't hold children
+	 * @throws InvalidActionException When the parent we're given can't have children
 	 */
 	public WorldThing finish() throws InvalidActionException {
 		// You can't call a function that expects Type<X> passing Type<XSubClass>, because
@@ -100,7 +100,7 @@ public class WorldThingFactory {
 											container, type, state, movable);
 		
 		// Register it with the parent (if given)
-		
+
 		if (parent != null)
 			parent.addChild(thing);
 		
@@ -131,6 +131,18 @@ public class WorldThingFactory {
 		
 		return this;
 	}
+	
+	/**
+	 * Add the given child to the thing we're creating
+	 * @param child The child to add
+	 * @return This factory
+	 * @throws InvalidActionException When the thing we're making can't hold children
+	 */
+	public WorldThingFactory addChild(WorldThing child) throws InvalidActionException {
+		this.children.add(child);
+		
+		return this;
+	}
 
 	/**
 	 * Mark the thing we're making as a container
@@ -155,8 +167,12 @@ public class WorldThingFactory {
 	/**
 	 * Mark who our object's parent should be
 	 * @return This factory
+	 * @throws InvalidActionException When the parent we're given can't hold children
 	 */
-	public WorldThingFactory setParent(WorldObject parent) {
+	public WorldThingFactory setParent(WorldObject parent) throws InvalidActionException {
+		if ((parent != null) && (!parent.isContainer()))
+			throw new InvalidActionException("Parent must be able to hold children");
+			
 		this.parent = parent;
 		
 		return this;
