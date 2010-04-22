@@ -26,7 +26,7 @@ public abstract class WorldObject extends ParserToken implements Comparable<Worl
 	/**
 	 * The state of this object
 	 */
-	public PossibleStates state = null;
+	private PossibleStates state = null;
 	/**
 	 * The description of this object. This can contain some special characters.
 	 * %s refers to the state of this object, %n refers to it's name,

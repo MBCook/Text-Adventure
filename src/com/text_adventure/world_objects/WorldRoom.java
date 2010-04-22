@@ -53,7 +53,7 @@ public class WorldRoom extends WorldObject {
 	}
 
 	/**
-	 * A funciton called when the player tries to enter this room
+	 * A function called when the player tries to enter this room
 	 * @throws InvalidActionException When they try to do something they shouldn't (i.e. door is locked)
 	 * @throws PlayerDeathException When they do something stupid (i.e. killed by guillotine over door)
 	 */
