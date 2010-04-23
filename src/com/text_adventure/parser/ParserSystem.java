@@ -69,6 +69,7 @@ public class ParserSystem {
 		
 		// Now some aliases
 		
+		addVerb(new GameVerbAlias(getVerbFromWord("look"), "read"));
 		addVerb(new GameVerbAlias(getVerbFromWord("take"), "pick-up"));
 		addVerb(new GameVerbAlias(getVerbFromWord("put"), "put-down"));
 		addVerb(new GameVerbAlias(getVerbFromWord("put"), "set-down"));
