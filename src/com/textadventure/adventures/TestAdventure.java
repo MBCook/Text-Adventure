@@ -44,7 +44,7 @@ public class TestAdventure implements Adventure {
 		
 		// Now we'll make an object and put it in the north east room, and register it with the world
 		
-		WorldThing key = new WorldThing(northEast, null, "key", "The magic key of Grazelphest.", false, "key", PossibleStates.NORMAL, true);
+		WorldThing key = new WorldThing(northEast, null, "key", "The magic key of Grazelphest.", false, "key", PossibleStates.NORMAL, true, false);
 		
 		northEast.addChild(key);
 		
@@ -54,7 +54,7 @@ public class TestAdventure implements Adventure {
 		
 		// Note that our box is fixed and shouldn't be movable, and should initially be closed.
 		
-		WorldThing box = new WorldThing(northWest, null, "box", "A magic box of hiding stuff.", true, "box", PossibleStates.CLOSED, false);
+		WorldThing box = new WorldThing(northWest, null, "box", "A magic box of hiding stuff.", true, "box", PossibleStates.CLOSED, false, true);
 		
 		northWest.addChild(box);
 		
