@@ -119,21 +119,21 @@ public class ReferentialAdventure implements Adventure {
 		
 		// Now we need the pit room, complete with pit
 		
-		WorldRoom pitRoom = new WorldRoom(null, null, "pit_room",
+		WorldRoom botmlessPitRoom = new WorldRoom(null, null, "botomless_pit_room",
 					"The room is lit by the unearthly glow from the strange door on the eastern side of the room. " +
 					"The floor of the western half of the room has almost entirely falled into a large, deep, pit. " +
 					"There is an old door leading north, connected to the eastern door by the pebble trail.",
 					PossibleStates.NORMAL);
 		
-		pitRoom.setRoomInDirection(finalHall, WorldDirection.NORTH);
-		finalHall.setRoomInDirection(pitRoom, WorldDirection.SOUTH);
+		botmlessPitRoom.setRoomInDirection(finalHall, WorldDirection.NORTH);
+		finalHall.setRoomInDirection(botmlessPitRoom, WorldDirection.SOUTH);
 		
 		WorldThing pit = WorldThingFactory.create("pit",
 					"Dark and deep, the only sign anything may exist below is the rare instance of a small " +
 					"cloud rising from the depts, causing an unnerving sense of nearby doom. The pit smells " +
-					"faintly of burnt strawberry jelly.", PossibleStates.NORMAL).setParent(pitRoom).makeUnmovable().finish();
+					"faintly of burnt strawberry jelly.", PossibleStates.NORMAL).setParent(botmlessPitRoom).makeUnmovable().finish();
 		
-		pitRoom.addSpecialObject(pit);
+		botmlessPitRoom.addSpecialObject(pit);
 
 		// The room with the first segment of the pebble trail
 		
@@ -143,8 +143,8 @@ public class ReferentialAdventure implements Adventure {
 					"is dusty enough that the action of walking stirs up enough dust to hide your footprints. ",
 					PossibleStates.NORMAL);
 		
-		pebbleHall.setRoomInDirection(pitRoom, WorldDirection.SOUTH);
-		pitRoom.setRoomInDirection(pebbleHall, WorldDirection.EAST);
+		pebbleHall.setRoomInDirection(botmlessPitRoom, WorldDirection.SOUTH);
+		botmlessPitRoom.setRoomInDirection(pebbleHall, WorldDirection.EAST);
 		
 		WorldThing trail = WorldThingFactory.create("trail", 
 					"A trail of pebbles, each spaced about an inch and a half apart. The pebbles have " +
@@ -169,7 +169,7 @@ public class ReferentialAdventure implements Adventure {
 		// The room at the end, with the mound in it
 		
 		WorldRoom moundRoom = new WorldRoom(null, null, "mound_room",
-					"In the middle of a floor is a large clay mound. The walls and the floor " +
+					"In the middle of a floor is a large clay mound. The gray walls and floor " +
 					"are covered in marks and handprints from people who have touched the mound. " +
 					"The only clean thing in the room is the portrait on the eastern wall, opposite the door.",
 					PossibleStates.NORMAL);
@@ -188,6 +188,50 @@ public class ReferentialAdventure implements Adventure {
 		
 		moundRoom.addSpecialObject(portrait);
 		portrait.setParent(moundRoom);
+		
+		// To get there you have to go through the warning room
+		
+		WorldRoom warningRoom = new WorldRoom(null, null, "warning_room",
+					"In the middle of a gray concrete room bright caution stripes that would look at " +
+					"home in an underground military base, you find a small sign in the middle of the " +
+					"room. Both the eastern and western doors look like they came from bank vaults.",
+					PossibleStates.NORMAL);
+		
+		warningRoom.setRoomInDirection(moundRoom, WorldDirection.WEST);
+		moundRoom.setRoomInDirection(warningRoom, WorldDirection.EAST);
+		
+		WorldThing sign = WorldThingFactory.create("sign",
+					"The small sign is welded to a small metal pipe, sitting about waist high. The " +
+					"sign reads simply:\n\n" +
+					"\"DANGER: There is a monster in the next room.\"",
+					PossibleStates.NORMAL).makeUnmovable().finish();
+		
+		warningRoom.addSpecialObject(sign);
+		sign.setParent(warningRoom);
+		
+		// The room with newt pit
+		
+		WorldRoom newtRoom = new WorldRoom(null, null, "newt_pit_room",
+					"Made of concrete cinderblocks, the most conspicuous thing in the room is " +
+					"easliy the large pit fill of newts below heavy door on the west side of the room. " +
+					"About 20ft deep and too wide to jump, there must be thousands of the things " +
+					"crawling on eachother to try to get out. You don't know if they are poisonous, " +
+					"but you're not big on finding out. There is a small sign on the wall, placed " +
+					"to be obvious to anyone who enters through the eastern door.",
+					PossibleStates.NORMAL);
+		
+		newtRoom.setRoomInDirection(warningRoom, WorldDirection.WEST);
+		warningRoom.setRoomInDirection(newtRoom, WorldDirection.EAST);
+		
+		// TODO: Add necessary stuff to let the player cross the newt pit, required to leave west
+		
+		WorldThing otherSign = WorldThingFactory.create("sign",
+					"\"WARNING: There is a terrible monster ahead, a newt pit has been installed to " +
+					"prevent accidental entrance.\"",
+					PossibleStates.NORMAL).makeUnmovable().finish();
+		
+		newtRoom.addSpecialObject(otherSign);
+		otherSign.setParent(newtRoom);
 		
 		// That's all on this map segment
 		
