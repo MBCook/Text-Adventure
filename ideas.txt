@@ -1,0 +1,1 @@
+Make it possible to give WorldThings aliases, so something can be "book", "novel", "tome", and "text".

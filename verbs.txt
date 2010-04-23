@@ -1,4 +1,4 @@
-look
+look/read
 take/pick-up
 put
 open
