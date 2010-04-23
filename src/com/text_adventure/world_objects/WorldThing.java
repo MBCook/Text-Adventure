@@ -17,6 +17,10 @@ public class WorldThing extends WorldObject {
 	 * If we can be moved (like a key) or not (like a big table)
 	 */
 	private boolean movable = true;
+	/**
+	 * If our state can be changed
+	 */
+	private boolean stateChangeable = false;
 	
 	/**
 	 * Set us up with the things we know about
@@ -28,12 +32,23 @@ public class WorldThing extends WorldObject {
 	 * @param type The type of object this is (furniture, key, whatever)
 	 * @param state The state of the object
 	 * @param movable If the object can be moved (like a key) or not (like a large desk)
+	 * @param stateChangeable If it's possible to change the object's state (like open/close it)
 	 */
 	public WorldThing(WorldObject parent, List<WorldObject> children, String name,
-						String description, boolean container, String type, PossibleStates state, boolean movable) {
+						String description, boolean container, String type, PossibleStates state,
+						boolean movable, boolean stateChangeable) {
 		super(parent, children, name, description, state, container);
 		this.type = type;
 		this.movable = movable;
+		this.stateChangeable = stateChangeable;
+	}
+	
+	/**
+	 * Find out if this object can change state
+	 * @return If it can change state
+	 */
+	public boolean isStateChangeable() {
+		return stateChangeable;
 	}
 	
 	/**

@@ -48,9 +48,13 @@ public class WorldThingFactory {
 	 */
 	private boolean container;
 	/**
-	 * Wheter our WorldThing will be movable
+	 * Whether our WorldThing will be movable
 	 */
 	private boolean movable;
+	/**
+	 * Whether or not the object can change state
+	 */
+	private boolean stateIsChangeable;
 	
 	/**
 	 * Start making an object, with the given starting parameters
@@ -79,6 +83,7 @@ public class WorldThingFactory {
 		this.type = "object";
 		this.container = false;
 		this.movable = true;
+		this.stateIsChangeable = false;
 	}
 	
 	/**
@@ -97,12 +102,18 @@ public class WorldThingFactory {
 		// Create the object
 		
 		WorldThing thing = new WorldThing(parent, stuff, name, description,
-											container, type, state, movable);
+											container, type, state, movable, stateIsChangeable);
 		
 		// Register it with the parent (if given)
 
 		if (parent != null)
 			parent.addChild(thing);
+		
+		// Register our object as the parent of each child we were given
+		
+		if (!children.isEmpty())
+			for (WorldThing child : children)
+				child.setParent(thing);
 		
 		return thing;
 	}
@@ -150,6 +161,16 @@ public class WorldThingFactory {
 	 */
 	public WorldThingFactory makeContainer() {
 		container = true;
+		
+		return this;
+	}
+	
+	/**
+	 * Mark the thing we're making as having a changeable state
+	 * @return This factory
+	 */
+	public WorldThingFactory makeStateChangeable() {
+		stateIsChangeable = true;
 		
 		return this;
 	}

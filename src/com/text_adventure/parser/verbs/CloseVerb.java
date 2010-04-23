@@ -33,7 +33,9 @@ public class CloseVerb extends GameVerb {
 		
 		WorldThing object = (WorldThing) sentence.get(1);
 		
-		if (object.getState().equals(PossibleStates.OPEN)) {
+		if (!object.isStateChangeable()) {
+			throw new InvalidActionException("The " + object.getName() + " can't be closed.");
+		} else if (object.getState().equals(PossibleStates.OPEN)) {
 			// Do it!
 			
 			object.setState(PossibleStates.CLOSED);

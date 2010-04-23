@@ -33,7 +33,9 @@ public class OpenVerb extends GameVerb {
 		
 		WorldThing object = (WorldThing) sentence.get(1);
 		
-		if (object.getState().equals(PossibleStates.CLOSED)) {
+		if (!object.isStateChangeable()) {
+			throw new InvalidActionException("The " + object.getName() + " can't be opened.");
+		} else if (object.getState().equals(PossibleStates.CLOSED)) {
 			// Do it!
 			
 			object.setState(PossibleStates.OPEN);
