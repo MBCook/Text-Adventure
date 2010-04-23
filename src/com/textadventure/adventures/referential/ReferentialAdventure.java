@@ -25,7 +25,7 @@ public class ReferentialAdventure implements Adventure {
 	private WorldThing dvd;
 	private WorldThing token;
 	private WorldThing printout;
-
+	
 	public GameWorld getWorld() throws InvalidActionException {
 		createObjects();
 		
@@ -47,7 +47,8 @@ public class ReferentialAdventure implements Adventure {
 					PossibleStates.NORMAL).finish();
 		 pringles = WorldThingFactory.create("pringles",
 					"An old can of Blueberry & Hazelnut Pringles, permenantly attached to the floor by some kind of goo.",
-					PossibleStates.CLOSED).makeUnmovable().makeContainer().addChild(amulet).finish();
+					PossibleStates.CLOSED).makeUnmovable().makeStateChangeable()
+					.makeContainer().addChild(amulet).finish();
 					// The can is immovable because it's attached to the floor
 		 key = WorldThingFactory.create("key",
 					"The Golden Key of Desitny is known far an wide. It is said that the posessor of the key " +
@@ -56,7 +57,8 @@ public class ReferentialAdventure implements Adventure {
 					PossibleStates.NORMAL).finish();
 		 mound = WorldThingFactory.create("mound",
 					"An odd mound of caked dirt, your hands can't make a dent in it.",
-					PossibleStates.NORMAL).makeUnmovable().makeContainer().addChild(key).finish();
+					PossibleStates.NORMAL).makeUnmovable()
+					.makeStateChangeable().makeContainer().addChild(key).finish();
 					// Attached to floor, holds the key
 		 spade = WorldThingFactory.create("spade",
 					"A simple rusty spade, it was clearly used for decades. The name 'Sam' is barely " +
@@ -111,7 +113,8 @@ public class ReferentialAdventure implements Adventure {
 					"Christmas lights strung along the ceiling. While many of the bulbs are burned out or broken, " +
 					"enough are lit for you to see a pile of ants, who seem to have fallen to their deaths from " +
 					"one of the many cracks in the ceiling. At the end of the trail, you see an old Pringles can " +
-					"that looks like it might be melting.",
+					"that looks like it might be melting. You suddenly realize that this might be the end of the " +
+					"\"maze\", and feel slightly dissapointed.",
 					PossibleStates.NORMAL);
 		
 		finalHall.addSpecialObject(pringles);
@@ -234,6 +237,104 @@ public class ReferentialAdventure implements Adventure {
 		otherSign.setParent(newtRoom);
 		
 		// That's all on this map segment
+		
+		return newtRoom;
+	}
+	
+	/**
+	 * Creates the east part of the map, with the basement/dungeon rooms
+	 * @return The first room of the collection containing the east part of the map
+	 * @throws InvalidActionException If you try to add something to a non-container
+	 */
+	private WorldRoom createEastWing() throws InvalidActionException {
+		// First, get the rooms we'll need to attach to
+		
+		WorldRoom pebleSeriesStart = createDungeonPebbleTrailRooms();
+		WorldRoom moundSeriesStart = createClayMoundRooms();
+		
+		// Make the room that at the base of the stairs, the start of the basement
+		
+		WorldRoom basement = new WorldRoom(null, null, "basement",
+					"You're standing in an unfinished basement room. To the west is a " +
+					"nondescript door. The eastern door is has 3 small pebbles in front of it. " +
+					"To the south, there is a door labled \"stairway\". At the north end of the " +
+					"room is a some kind of sign.",
+					PossibleStates.NORMAL);
+		
+		pebleSeriesStart.setRoomInDirection(basement, WorldDirection.WEST);
+		basement.setRoomInDirection(pebleSeriesStart, WorldDirection.EAST);
+		moundSeriesStart.setRoomInDirection(basement, WorldDirection.EAST);
+		basement.setRoomInDirection(moundSeriesStart, WorldDirection.WEST);
+		
+		WorldThing sign = WorldThingFactory.create("sign",
+					"A yellow and black caution sign, the lettering spells out:\n\n" +
+					"\"Beware of monster\"", PossibleStates.NORMAL).makeUnmovable().finish();
+		
+		basement.addSpecialObject(sign);
+		sign.setParent(basement);
+		
+		// To get to the basement, you have to go down the stairs
+		
+		WorldRoom stairwell = new WorldRoom(null, null, "stairwell",
+					"A long creeky wooden staircase descends northward to the basement door.",
+					PossibleStates.NORMAL);
+		
+		stairwell.setRoomInDirection(basement, WorldDirection.NORTH);
+		basement.setRoomInDirection(stairwell, WorldDirection.SOUTH);
+		
+		// The stairwell's connected to the... janitor's closet
+		
+		WorldRoom janitorsCloset = new WorldRoom(null, null, "janitors_closet",
+					"This room contains the cleaning supplies used on the rest of the house. " +
+					"The shelves for the cleaning supplies are covered in cobwebbs, except for " +
+					"the few items that seem to be used frequently. To the right of the north " +
+					"door, there is a collection of old mops with a sign above. The western door " +
+					"leads back to the hallway.",
+					PossibleStates.NORMAL);
+		
+		WorldThing mops = WorldThingFactory.create("mops",
+					"Locked in a sealed glass case, you can see every kind of mop you can imagine: " +
+					"a wet mop AND a dry mop. You realize your imagination isn't very strong, " +
+					"and die a little inside.",
+					PossibleStates.NORMAL).makeUnmovable().finish();
+		
+		janitorsCloset.addSpecialObject(mops);
+		mops.setParent(janitorsCloset);
+		
+		WorldThing glue = WorldThingFactory.create("glue", "An old tube of Super Adhesive Industrial " +
+					"Glue which appears to be made out of a thin sheet of metal, a leak seems to have " +
+					"caused the cap and some supplies on lower shelves to become permentant fixtures.",
+					PossibleStates.CLOSED).makeUnmovable().makeStateChangeable().finish();
+		WorldThing bleach = WorldThingFactory.create("bleach",
+					"A reletively recent vintage of Morgan's Choice bleach, the label advertises that " +
+					"it can remove most any stain, no matter how big, and won't react with plastics " +
+					"like toys and trash bags.",
+					PossibleStates.CLOSED).makeUnmovable().makeStateChangeable().finish();
+		
+		WorldThing[] stuff = {glue, bucket, bleach};
+		
+		WorldThing shelves = WorldThingFactory.create("shelves",
+					"Simple metal framing with plywood shelves, these shelves are covered in cobwebs. " +
+					"You see many half-empty cleaning supplies that look like they haven't been used " +
+					"since the Ford administration. An old tube of glue seems to be dripping.",
+					PossibleStates.OPEN).makeContainer().addChildren(stuff).makeUnmovable().finish();
+		
+		janitorsCloset.addSpecialObject(shelves);
+		shelves.setParent(janitorsCloset);
+		
+		WorldThing mazeSign = WorldThingFactory.create("sign",
+					"A small paper sign above the mops, it warns that there is a \"Maze of Doom\" " +
+					"in the basement. There is a small hand-scrawled note in the corner that says to " +
+					"remember the \"trick\".",
+					PossibleStates.NORMAL).makeUnmovable().finish();
+		
+		janitorsCloset.addSpecialObject(mazeSign);
+		mazeSign.setParent(janitorsCloset);
+		
+		stairwell.setRoomInDirection(janitorsCloset, WorldDirection.SOUTH);
+		janitorsCloset.setRoomInDirection(stairwell, WorldDirection.NORTH);
+		
+		// That takes care of all those rooms
 		
 		return null;
 	}
