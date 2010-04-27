@@ -29,6 +29,8 @@ public class ReferentialAdventure implements Adventure {
 	public GameWorld getWorld() throws InvalidActionException {
 		createObjects();
 		
+		WorldRoom eastRooms = createEastWing();
+		
 		return null;
 	}
 	
@@ -334,7 +336,44 @@ public class ReferentialAdventure implements Adventure {
 		stairwell.setRoomInDirection(janitorsCloset, WorldDirection.SOUTH);
 		janitorsCloset.setRoomInDirection(stairwell, WorldDirection.NORTH);
 		
+		// The long hallway of portraits
+		
+		WorldRoom hall = new WorldRoom(null, null, "hall",
+					"You're in a very long hallway, with a series of large portraits on the north wall. " +
+					"Each has a large gold colored frame which would look at home in a movie theater. " +
+					"The long rug under your feet stretches from the western door to the east, and looks " +
+					"like it was recently vacuumed.",
+					PossibleStates.NORMAL);
+		
+		janitorsCloset.setRoomInDirection(hall, WorldDirection.WEST);
+		hall.setRoomInDirection(janitorsCloset, WorldDirection.EAST);
+		
+		WorldThing portraits = WorldThingFactory.create("portraits",
+					"Among the many portraits on the wall, you see:\n" +
+					" -Alexander the Orator\n" +
+					" -Bartholomew the Jaundiced\n" +
+					" -George the Plump\n" +
+					" -Jay the Opinionated\n" +
+					" -Gob the Mystifying\n" +
+					" -Terrance the Regal\n" +
+					" -Papa the Elder\n" +
+					" -Edwardo the Hungry",
+					PossibleStates.NORMAL).makeUnmovable().finish();
+		
+		hall.addSpecialObject(portraits);
+		
 		// That takes care of all those rooms
+		
+		return hall;
+	}
+	
+	/**
+	 * Creates the rooms behind the fireplace
+	 * @return The first room behind the fireplace
+	 * @throws InvalidActionException If you try to add something to a non-container
+	 */
+	private WorldRoom createFireplaceRooms() throws InvalidActionException {
+		
 		
 		return null;
 	}
