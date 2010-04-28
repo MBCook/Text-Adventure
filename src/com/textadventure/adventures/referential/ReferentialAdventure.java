@@ -19,7 +19,7 @@ public class ReferentialAdventure implements Adventure {
 	private WorldThing mound;
 	private WorldThing spade;
 	private WorldThing plank;
-	private WorldThing computer;
+	private WorldThing laptop;
 	private WorldThing earplugs;
 	private WorldThing toothbrush;
 	private WorldThing dvd;
@@ -71,7 +71,7 @@ public class ReferentialAdventure implements Adventure {
 					"with \"global warming age chemicals\" to allow it to be compressed to a handy pocket size, " +
 					"but easily extended again to cross any chasm.",
 					PossibleStates.NORMAL).finish();
-		 computer = WorldThingFactory.create("computer",
+		 laptop = WorldThingFactory.create("laptop",
 					"A NAVI brand laptop computer, with a faded tangerine plastic case. NAVI \"Knownledge " +
 					"Navigator\"s are well known for being highly expandable, as well as cute.",
 					PossibleStates.NORMAL).finish();
@@ -338,7 +338,7 @@ public class ReferentialAdventure implements Adventure {
 		
 		// The long hallway of portraits
 		
-		WorldRoom hall = new WorldRoom(null, null, "hall",
+		WorldRoom hall = new WorldRoom(null, null, "portrait_hall",
 					"You're in a very long hallway, with a series of large portraits on the north wall. " +
 					"Each has a large gold colored frame which would look at home in a movie theater. " +
 					"The long rug under your feet stretches from the western door to the east, and looks " +
@@ -373,8 +373,39 @@ public class ReferentialAdventure implements Adventure {
 	 * @throws InvalidActionException If you try to add something to a non-container
 	 */
 	private WorldRoom createFireplaceRooms() throws InvalidActionException {
+		// Back to front as always. That means the computer room
 		
+		WorldRoom computerRoom = new WorldRoom(null, null, "computer_room",
+					"This is a simple room with white walls, a wooden table, a laptop, and, oh yea, " +
+					"dozens of giant speakers. The subwoofer alone is one full wall, straight across " +
+					"from the southern door for full effect on anyone who enters.",
+					PossibleStates.LOCKED);
 		
-		return null;
+		// TODO: Make the description not mention the laptop when it's gone, mention the
+		// music (random song?) when the laptop is in place.
+		// TODO: Allow aliases for objects (computer is laptop is ...)
+		// TODO: Make it so they can't enter the room unless they have the earplugs
+
+		computerRoom.addSpecialObject(laptop);
+		
+		// Before the computer room, there is a padded cell
+		
+		WorldRoom paddedCell = new WorldRoom(null, null, "padded_cell",
+					"There is thick padding on every wall, like those of a mental asylum. You're not sure " +
+					"if this is to dampen the loud music from the next room, or to comfort those who " +
+					"lose their minds having to listen to it. Despite the volume, the soundis muffled by " +
+					"the door so you can't really pick out what the song it is, but they keep singing a " +
+					"word like 'colonel-danzing'.",
+					PossibleStates.LOCKED);
+		
+		// TODO: Change the descrption of the music each time the player asks for it (or enters room).
+		// TODO: Make it so the description changes to stop mentioning the music when computer has
+		// been taken
+		// TODO: Make it so the room isn't visible/unlocked until the fire in the first room is out
+		
+		paddedCell.setRoomInDirection(computerRoom, WorldDirection.NORTH);
+		computerRoom.setRoomInDirection(paddedCell, WorldDirection.SOUTH);
+		
+		return paddedCell;
 	}
 }
